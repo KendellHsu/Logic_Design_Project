@@ -12,11 +12,12 @@ module LED_top (
     output G1,
     output B1,
     output OE,
-    output LAT
+    output LAT,
+    output clk_shft
 );
 
     wire clk_shift;
-
+    assign clk_shft = clk_shift;
 
     clk_div clk_div0(.clk(clk),
                 .rst(rst),
@@ -24,7 +25,7 @@ module LED_top (
                 );
 
     matrix m1(
-    .clk(clk),
+    .clk(clk_shift),
     .rst(rst),               
     .A(A), 
     .B(B),

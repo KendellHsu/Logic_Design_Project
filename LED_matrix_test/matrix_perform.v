@@ -71,8 +71,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 
         else if(cnt == 7'd64) cnt <= 7'd0;
 
-        else if(CS == GET)    cnt <= cnt + 7'd1;
-
+        else if(NS == GET)    cnt <= cnt + 7'd1;
         else                  cnt <= cnt;
     end
 

@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1ps/1ps
 
 module matrix_tb;
 
@@ -19,7 +19,6 @@ module matrix_tb;
     wire B1;
     wire OE;
     wire LAT;
-
 
     // Instantiate the matrix module
     LED_top uut (
@@ -56,7 +55,14 @@ module matrix_tb;
                  $time, A, B, C, D, R0, G0, B0, R1, G1, B1, OE, LAT);
 
         // Run for a certain amount of time to observe behavior
-        #15000000 $finish;
+        // but stop when A, B, C, and D are all 1
+        forever begin
+            #10; // Check every 10 ns
+            if (A && B && C && D) begin
+                $display("All signals A, B, C, and D are 1. Stopping simulation.");
+                $finish;
+            end
+        end
     end
 
     // Additional tasks for checking specific functionalities

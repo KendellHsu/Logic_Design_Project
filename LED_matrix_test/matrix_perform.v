@@ -101,19 +101,20 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
             B1 <= 1'd0;
         end
 
-        else if(cnt[0] == 0 && cnt[1] == 0 && cnt[2] == 0 && cnt[3] == 0) begin    //multiple of 16
-            R0 <= 1'd1;
-            R1 <= 1'd1;
-        end
+        else if(cnt == 7'd00000011)
+        // else if(cnt[0] == 0 && cnt[1] == 0 && cnt[2] == 0 && cnt[3] == 0) begin    //multiple of 16
+        //     R0 <= 1'd1;
+        //     R1 <= 1'd1;
+        // end
 
-        else if(cnt[0] == 0 && cnt[1] == 0 && cnt[2] == 0) begin                   //multiple of 8
-            G0 <= 1'd1;
-            G1 <= 1'd1;
-        end
-        else if(cnt[0] == 0 && cnt[1] == 0) begin                                  //multiple of 4
-            B0 <= 1'd1;
-            B1 <= 1'd1;
-        end
+        // else if(cnt[0] == 0 && cnt[1] == 0 && cnt[2] == 0) begin                   //multiple of 8
+        //     G0 <= 1'd1;
+        //     G1 <= 1'd1;
+        // end
+        // else if(cnt[0] == 0 && cnt[1] == 0 && cnt[2] == 1) begin                                  //multiple of 4
+        //     B0 <= 1'd1;
+        //     B1 <= 1'd1;
+        // end
         else if(cnt[0] == 0) begin                                                 //multiple of 2
             R0 <= 1'd1;
             G0 <= 1'd1;

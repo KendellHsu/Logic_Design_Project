@@ -1,11 +1,11 @@
 module ScoreCounter (
-    input wire clk,           // ®ÉÄÁ«H¸¹
-    input wire reset,         // ­«¸m«H¸¹
-    input wire [1:0] Inp,     // ¿é¤Jª¬ºA­È
-    output reg [15:0] score   // ¤À¼Æ¿é¥X
+    input wire clk,           // ï¿½ï¿½ï¿½ï¿½ï¿½Hï¿½ï¿½
+    input wire reset,         // ï¿½ï¿½ï¿½mï¿½Hï¿½ï¿½
+    input wire [1:0] Inp,     // ï¿½ï¿½Jï¿½ï¿½ï¿½Aï¿½ï¿½
+    output reg [15:0] score   // ï¿½ï¿½ï¿½Æ¿ï¿½X
 );
 
-    // ©w¸q¨C­Óª¬ºAªº¤À¼Æ
+    // ï¿½wï¿½qï¿½Cï¿½Óªï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     parameter SCORE_01 = 16'd32;
     parameter SCORE_10 = 16'd256;
     parameter SCORE_11 = 16'd512;
@@ -13,13 +13,13 @@ module ScoreCounter (
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            score <= 16'd0;  // ·íreset«H¸¹¬°°ª®É¡A¤À¼ÆÂk¹s
+            score <= 16'd0;  // ï¿½ï¿½resetï¿½Hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡Aï¿½ï¿½ï¿½ï¿½ï¿½kï¿½s
         end else begin
-            case (Inp)
+            case (Inp) 
                 2'b01: score <= (score + SCORE_01 <= MAX_SCORE) ? score + SCORE_01 : MAX_SCORE;
                 2'b10: score <= (score + SCORE_10 <= MAX_SCORE) ? score + SCORE_10 : MAX_SCORE;
                 2'b11: score <= (score + SCORE_11 <= MAX_SCORE) ? score + SCORE_11 : MAX_SCORE;
-                default: score <= score;  // ¨ä¥L±¡ªp¤U¤À¼Æ«O«ù¤£ÅÜ
+                default: score <= score;  // ï¿½ï¿½Lï¿½ï¿½ï¿½pï¿½Uï¿½ï¿½ï¿½Æ«Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             endcase
         end
     end

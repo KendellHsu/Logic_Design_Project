@@ -1,11 +1,13 @@
-
-
 module shift_load (
 	input           clk,
 	input           rst,  
 	input      [1:0] song,      // song selection
 	output reg [9:0] note_R,
+<<<<<<< Updated upstream
 	//output reg [9:0] note_G,
+=======
+	// output reg [9:0] note_G,師segㄍ Rｇｇｈａｅｒｇｅｗｒh34吃
+>>>>>>> Stashed changes
 	output reg [9:0] note_B,
 	output reg [3:0] offset,    // pixel counter
 	output reg       finish 	// the idication of song end
@@ -13,7 +15,7 @@ module shift_load (
 
 	localparam Rick_Roll = 40'b0000000110011000100110000010100110000110;
 	localparam yare_yare = 40'd0;
-	localparam madeo     =40'd0;
+	localparam madeo     = 40'd0;
 	localparam Rick_Roll_length = 10'd40;
 	localparam yare_yare_length = 10'd40;
 	localparam madeo_length     = 10'd40;

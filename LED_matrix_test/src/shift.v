@@ -3,11 +3,7 @@ module shift_load (
 	input           rst,  
 	input      [1:0] song,      // song selection
 	output reg [9:0] note_R,
-<<<<<<< Updated upstream
 	//output reg [9:0] note_G,
-=======
-	// output reg [9:0] note_G,師segㄍ Rｇｇｈａｅｒｇｅｗｒh34吃
->>>>>>> Stashed changes
 	output reg [9:0] note_B,
 	output reg [3:0] offset,    // pixel counter
 	output reg       finish 	// the idication of song end

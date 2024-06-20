@@ -1,5 +1,3 @@
-
-
 module shift_load (
 	input           clk,
 	input           rst,  
@@ -13,7 +11,7 @@ module shift_load (
 
 	localparam Rick_Roll = 40'b0000000110011000100110000010100110000110;
 	localparam yare_yare = 40'd0;
-	localparam madeo     =40'd0;
+	localparam madeo     = 40'd0;
 	localparam Rick_Roll_length = 10'd40;
 	localparam yare_yare_length = 10'd40;
 	localparam madeo_length     = 10'd40;

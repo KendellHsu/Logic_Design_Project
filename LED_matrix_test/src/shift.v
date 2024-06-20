@@ -5,8 +5,8 @@ module shift_load (
 	input           rst,  
 	input      [1:0] song,      // song selection
 	output reg [9:0] note_R,
-	output reg [9:0] note_G,
-	//output reg [9:0] note_B,
+	//output reg [9:0] note_G,
+	output reg [9:0] note_B,
 	output reg [3:0] offset,    // pixel counter
 	output reg       finish 	// the idication of song end
 );
@@ -66,7 +66,7 @@ module shift_load (
 
 		IDLE:	  NS = (song != 2'd0) 		  ? NOTE_GET : IDLE;
 
-		NOTE_GET: NS = (cnt_time == 6'd9)	  ? OFFSET   : NOTE_GET;
+		NOTE_GET: NS = (cnt_time == 17'd99999)	  ? OFFSET   : NOTE_GET;
 
 		OFFSET:   NS = (index == song_length >> 1) ? FINISH   : NOTE_GET;
 
@@ -81,9 +81,9 @@ module shift_load (
 // cnt_time
 	always @(posedge clk or posedge rst) begin
 		if(rst) cnt_time <= 6'd0; 
-		else if(CS == NOTE_GET) cnt_time <= cnt_time + 6'd1;
-		else if(cnt_time > 6'd9)   cnt_time <= 6'd0;
-		else                    cnt_time <= cnt_time;
+		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 6'd1;
+		else if(cnt_time > 17'd99999)   cnt_time <= 6'd0;
+		else                          cnt_time <= cnt_time;
 	end
 
 // offset & index
@@ -117,20 +117,20 @@ module shift_load (
 	always @(*) begin
 		if(rst) begin
 			note_R = 10'd0;
-			note_G = 10'd0;
-			//note_B = 10'd0;
+			//note_G = 10'd0;
+			note_B = 10'd0;
 		end
 
 		for ( i=0 ; i<10;i=i+1 ) begin
 			if(note_range[i*2+:2] == 2'd1) begin
 				note_R[i] = 1'd1;
-				note_G[i] = 1'd0;
-				//note_B[9] == 1'd0;
+				//note_G[i] = 1'd0;
+				note_B[i] == 1'd0;
 			end	
 			else if(note_range[i*2+:2] == 2'd2) begin
 				note_R[i] = 1'd0;
-				note_G[i] = 1'd1;
-				//note_B[9] == 1'd0;
+				//note_G[i] = 1'd1;
+				note_B[i] == 1'd1;
 			end	 
 		end
 	end

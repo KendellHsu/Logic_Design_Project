@@ -47,18 +47,11 @@ reg [1:0] CS, NS;
 reg [6:0] col;    // column count
 reg [3:0] row;    // row count
 
-wire clk_shift;
-    assign clk_shft = clk_shift;
-
-    clk_div clk_div0(.clk(clk),
-                .rst(rst),
-                .clk_div(clk_shift)
-                );
 
 parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 
     //FSM
-    always @(posedge clk_shift or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) CS <= IDLE;
 
         else       CS <= NS;
@@ -80,7 +73,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 //reg 
 
     //column count
-    always @(posedge clk_shift or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst)               col <= 7'd0;
 
         else if(col == 7'd64) col <= 7'd0;
@@ -91,7 +84,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 
 
     //row count
-    always @(posedge clk_shift or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) row <= 4'd0;
 
         else if(CS == TRANSMIT) row <= row + 4'd1;
@@ -105,7 +98,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
     end
     
     //RGB output
-    always @(posedge clk_shift or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) begin
             R0 <= 1'd0;
             G0 <= 1'd0;
@@ -153,7 +146,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
     end
 
     //OE, LAT output
-    always @(posedge clk_shift or posedge rst) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) begin
             OE  <= 1'd0;
             LAT <= 1'd0;

@@ -4,7 +4,7 @@ module tb;
 
     reg clk;
     reg rst;
-    reg [1:0] song;
+    reg [1:0] bottom;
     wire A; 
     wire B;
     wire C;
@@ -18,9 +18,11 @@ module tb;
     wire OE;
     wire LAT;
 
+    // Instantiate the control module
     control c1(
         .clk(clk),
         .rst(rst),
+        .bottom(bottom),
         .A(A),
         .B(B),
         .C(C),
@@ -28,30 +30,29 @@ module tb;
         .R0(R0),
         .G0(G0),
         .B0(B0),
-        .R1(R0),
-        .G1(G0),
-        .B1(B0),
+        .R1(R1),
+        .G1(G1),
+        .B1(B1),
         .OE(OE),
         .LAT(LAT)
     );
 
     initial begin
-        clk =0;
-        rst =0;
-        song = 2'd0;
+        clk = 0;
+        rst = 1;
+        // Reset the design
+        #10 rst = 0;
+        #20 bottom = 2'd1;
 
 
-    #10 rst = 0;
-    #20 song = 2'd1;
-    #10 song = 2'd0;
+        // Run for a while
+        #100000000;
 
-    #10000000000;
-
-    $stop;
+        // Finish simulation
+        $stop;
     end
 
-
-
-
+    // Clock generation
+    always #5 clk = ~clk; // 100MHz clock
 
 endmodule

@@ -23,7 +23,7 @@ module shift_load (
 	reg [1:0]   CS, NS;  
 	reg [100:0] song_bits ;      // storage the selection song bits
 	reg [9:0]  song_length;
-	reg [5:0]   cnt_time;        // time counter
+	reg [16:0]   cnt_time;        // time counter
 	reg [19:0]  note_range;      
 
 
@@ -64,7 +64,7 @@ module shift_load (
 
 		IDLE:	  NS = (song != 2'd0) 		  ? NOTE_GET : IDLE;
 
-		NOTE_GET: NS = (cnt_time == 17'd99999)	  ? OFFSET   : NOTE_GET;
+		NOTE_GET: NS = (cnt_time == 17'd999)	  ? OFFSET   : NOTE_GET;
 
 		OFFSET:   NS = (index == song_length >> 1) ? FINISH   : NOTE_GET;
 
@@ -78,9 +78,9 @@ module shift_load (
 
 // cnt_time
 	always @(posedge clk or posedge rst) begin
-		if(rst) cnt_time <= 6'd0; 
-		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 6'd1;
-		else if(cnt_time > 17'd99999)   cnt_time <= 6'd0;
+		if(rst) cnt_time <= 17'd0; 
+		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 17'd1;
+		else if(cnt_time > 17'd999)   cnt_time <= 17'd0;
 		else                          cnt_time <= cnt_time;
 	end
 
@@ -123,12 +123,12 @@ module shift_load (
 			if(note_range[i*2+:2] == 2'd1) begin
 				note_R[i] = 1'd1;
 				//note_G[i] = 1'd0;
-				note_B[i] == 1'd0;
+				note_B[i] = 1'd0;
 			end	
 			else if(note_range[i*2+:2] == 2'd2) begin
 				note_R[i] = 1'd0;
 				//note_G[i] = 1'd1;
-				note_B[i] == 1'd1;
+				note_B[i] = 1'd1;
 			end	 
 		end
 	end

@@ -6,18 +6,18 @@ module control(
     input clk,
     input rst,
     input [1:0] bottom,
-    output reg A, 
-    output reg B,
-    output reg C,
-    output reg D,
-    output reg R0,
-    output reg G0,
-    output reg B0,
-    output reg R1,
-    output reg G1,
-    output reg B1,
-    output reg OE,
-    output reg LAT
+    output A, 
+    output B,
+    output C,
+    output D,
+    output R0,
+    output G0,
+    output B0,
+    output R1,
+    output G1,
+    output B1,
+    output OE,
+    output LAT
 );
 
     wire clk_div;
@@ -34,7 +34,7 @@ module control(
     wire [191:0] bitmap6;
 
     clk_div CLK(
-        .clk(clk_div),
+        .clk(clk),
         .rst(rst),
         .clk_div(clk_div)
     );
@@ -58,19 +58,19 @@ module control(
         .bitmap3(bitmap3),
         .bitmap4(bitmap4),
         .bitmap5(bitmap5),
-        .bitmap6(bitmap6),
+        .bitmap6(bitmap6)
     );
 
     matrix M1(
         .clk(clk_div),
         .rst(rst),
-        .bitmap0(bitmap0),
-        .bitmap1(bitmap1),
-        .bitmap2(bitmap2),
-        .bitmap3(bitmap3),
-        .bitmap4(bitmap4),
-        .bitmap5(bitmap5),
-        .bitmap6(bitmap6),
+        .notesMap0(bitmap0),
+        .notesMap1(bitmap1),
+        .notesMap2(bitmap2),
+        .notesMap3(bitmap3),
+        .notesMap4(bitmap4),
+        .notesMap5(bitmap5),
+        .notesMap6(bitmap6),
         .A(A),
         .B(B),
         .C(C),
@@ -81,7 +81,7 @@ module control(
         .R1(R1),
         .G1(G1),
         .B1(B1),
-        .oE(OE),
+        .OE(OE),
         .LAT(LAT)
     ); 
     

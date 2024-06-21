@@ -113,20 +113,32 @@ module shift_load (
 	end
 
 	always @(*) begin
+		if(rst) begin
+			note_R = 10'd0;
+		  //note_G = 10'd0;
+			note_B = 10'd0;
+		end  
+		else begin
 				
 			for ( i=0 ; i<10;i=i+1 ) begin
-				if(note_range[i*2+:2] == 2'd1) begin
+				if(note_range[19-i*2-:2] == 2'd1) begin
 					note_R[i] = 1'd1;
 					//note_G[i] = 1'd0;
-					note_B[i] = 1'd0;
+					note_B[i]<= 1'd0;
 				end	
-				else if(note_range[i*2+:2] == 2'd2) begin
+				else if(note_range[19-i*2-:2] == 2'd2) begin
 					note_R[i] = 1'd0;
 					//note_G[i] = 1'd1;
 					note_B[i] = 1'd1;
 				end	 
+				else if(note_range[19-i*2-:2] == 2'd0)begin
+						note_R[i] = 1'd0;
+						//note_G[i] = 1'd1;
+						note_B[i] = 1'd0;
+				end					
 			end
 		end
+	end
 
 //finish
 	always @(posedge clk or posedge rst) begin

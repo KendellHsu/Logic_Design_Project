@@ -158,7 +158,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                 LAT <= 1'd0;
             end
             else if(NS == TRANSMIT) begin
-                OE  <= 1'd0;
+                OE  <= 1'd1;
                 LAT <= 1'd1;
             end
             else if(NS == IDLE) begin

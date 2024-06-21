@@ -5,7 +5,7 @@
 module control(
     input clk,
     input rst,
-    input [1:0] bottom,
+    //input bottom,
     output A, 
     output B,
     output C,
@@ -17,14 +17,14 @@ module control(
     output G1,
     output B1,
     output OE,
-    output LAT
+    output LAT,
+    output clk_shft
 );
 
-    wire clk_div;
     wire finish;
     wire [9:0] note_R;
     wire [9:0] note_B;
-    wire [3:0] offset;
+    wire [2:0] offset;
     wire [191:0] bitmap0;
     wire [191:0] bitmap1;
     wire [191:0] bitmap2;
@@ -33,16 +33,16 @@ module control(
     wire [191:0] bitmap5;
     wire [191:0] bitmap6;
 
-    clk_div CLK(
+    clk_div clk_div_0(
         .clk(clk),
         .rst(rst),
-        .clk_div(clk_div)
+        .clk_div(clk_shft)
     );
 
     shift_load SH1(
-        .clk(clk_div),
+        .clk(clk_shft),
         .rst(rst),
-        .song(bottom),
+        .song(2'b1),
         .note_R(note_R),
         .note_B(note_B),
         .offset(offset),
@@ -51,6 +51,7 @@ module control(
     drawNode DN1(
         .red_notes(note_R),
         .blue_notes(note_B),
+        .rst(rst),
         .offset(offset),
         .bitmap0(bitmap0),
         .bitmap1(bitmap1),
@@ -62,7 +63,7 @@ module control(
     );
 
     matrix M1(
-        .clk(clk_div),
+        .clk(clk_shft),
         .rst(rst),
         .notesMap0(bitmap0),
         .notesMap1(bitmap1),

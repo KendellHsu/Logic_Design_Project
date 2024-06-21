@@ -5,7 +5,7 @@ module shift_load (
 	output reg [9:0] note_R,
 	//output reg [9:0] note_G,
 	output reg [9:0] note_B,
-	output reg [3:0] offset,    // pixel counter
+	output reg [2:0] offset,    // pixel counter
 	output reg       finish 	// the idication of song end
 );
 
@@ -47,13 +47,13 @@ module shift_load (
 
 		2'd2: begin
 			song_bits[100 -: yare_yare_length] = yare_yare;
-			song_length = yare_yare_length;
-		end
+		 	song_length = yare_yare_length;
+		 end
 
-	 	2'd3: begin
-			song_bits[100 -: madeo_length] = madeo;
-			song_length = madeo_length;
-		end
+	 	 2'd3: begin
+		 	song_bits[100 -: madeo_length] = madeo;
+		 	song_length = madeo_length;
+		 end
 
 		endcase
 
@@ -64,7 +64,7 @@ module shift_load (
 
 		IDLE:	  NS = (song != 2'd0) 		  ? NOTE_GET : IDLE;
 
-		NOTE_GET: NS = (cnt_time == 17'd999)	  ? OFFSET   : NOTE_GET;
+		NOTE_GET: NS = (cnt_time == 17'd99999)	  ? OFFSET   : NOTE_GET;
 
 		OFFSET:   NS = (index == song_length >> 1) ? FINISH   : NOTE_GET;
 
@@ -80,23 +80,23 @@ module shift_load (
 	always @(posedge clk or posedge rst) begin
 		if(rst) cnt_time <= 17'd0; 
 		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 17'd1;
-		else if(cnt_time > 17'd999)   cnt_time <= 17'd0;
+		else if(cnt_time > 17'd99999)   cnt_time <= 17'd0;
 		else                          cnt_time <= cnt_time;
 	end
 
 // offset & index
 	always @(posedge clk or posedge rst) begin
 		if(rst) begin 
-			offset <= 4'd0;
+			offset <= 3'd0;
 			index  <= 10'd0;
 		end
-		else if(NS == OFFSET && offset == 4'd6) begin
-			offset <= 4'd0;
+		else if(NS == OFFSET && offset == 3'd6) begin
+			offset <= 3'd0;
 			index <= index + 10'd1;
 		end
 
 		else if(NS == OFFSET) begin
-			offset <= offset + 4'd1;
+			offset <= offset + 3'd1;
 		end
 
 		else begin
@@ -113,25 +113,20 @@ module shift_load (
 	end
 
 	always @(*) begin
-		if(rst) begin
-			note_R = 10'd0;
-			//note_G = 10'd0;
-			note_B = 10'd0;
+				
+			for ( i=0 ; i<10;i=i+1 ) begin
+				if(note_range[i*2+:2] == 2'd1) begin
+					note_R[i] = 1'd1;
+					//note_G[i] = 1'd0;
+					note_B[i] = 1'd0;
+				end	
+				else if(note_range[i*2+:2] == 2'd2) begin
+					note_R[i] = 1'd0;
+					//note_G[i] = 1'd1;
+					note_B[i] = 1'd1;
+				end	 
+			end
 		end
-
-		for ( i=0 ; i<10;i=i+1 ) begin
-			if(note_range[i*2+:2] == 2'd1) begin
-				note_R[i] = 1'd1;
-				//note_G[i] = 1'd0;
-				note_B[i] = 1'd0;
-			end	
-			else if(note_range[i*2+:2] == 2'd2) begin
-				note_R[i] = 1'd0;
-				//note_G[i] = 1'd1;
-				note_B[i] = 1'd1;
-			end	 
-		end
-	end
 
 //finish
 	always @(posedge clk or posedge rst) begin

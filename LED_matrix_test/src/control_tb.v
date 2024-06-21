@@ -4,7 +4,7 @@ module tb;
 
     reg clk;
     reg rst;
-    reg [1:0] bottom;
+    reg bottom;
     wire A; 
     wire B;
     wire C;
@@ -22,7 +22,7 @@ module tb;
     control c1(
         .clk(clk),
         .rst(rst),
-        .bottom(bottom),
+        //.bottom(bottom),
         .A(A),
         .B(B),
         .C(C),
@@ -42,7 +42,7 @@ module tb;
         rst = 1;
         // Reset the design
         #10 rst = 0;
-        #20 bottom = 2'd1;
+        //#20 bottom = 2'd1;
 
 
         // Run for a while

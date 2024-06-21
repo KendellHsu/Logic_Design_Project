@@ -14,42 +14,17 @@ module shift_load (
 	output reg       finish 	// the idication of song end
 );
 
-	localparam Rick_Roll = 480'b01000100110000000100110001000000
-								01000011010001000100000000000000
-								11001100010000001100010011000000
-								11000001010011000100000000000000
-								01001100010000001100010001000000
-								01000011110001001100000000000000
-								11000100110000000100110001000000
-								01000001010011001100110001000000
-								11000001000011000100001100000100
-								01000011000001000100001100000100
-								11000001000011001100000100000100
-								01000001110001001100110011000000
-								11000011000001000100001100000100
-								01000011000001001100000100001100
-								11000001000001000100001100000100;
+	localparam Rick_Roll = 288'b010000000101000010000010000100100001000010010010000000000001010100100000101000010000000100100000000000000000000000000010010100101001000010010001000100100010001000010000101000010010000100101001000100001001001001000001000100100001000100100000000101000101001001000000000000000000000000000000;
 
-	localparam yare_yare = 480'b01000100110000000100110001000000
-							    01000011010001000100000000000000
-							    11001100010000001100010011000000
-							    11000001010011000100000000000000
-							    01001100010000001100010001000000
-							    01000011110001001100000000000000
-							    11000100110000000100110001000000
-							    01000001010011001100110001000000
-							    11000001000011000100001100000100
-							    01000011000001000100001100000100
-							    11000001000011001100000100000100
-							    01000001110001001100110011000000
-							    11000011000001000100001100000100
-							    01000011000001001100000100001100
-							    11000001000001000100001100000100;
+	localparam yare_yare = 480'b010001001000000001001000010000000100001001000100010000000000000010001000010000001000010010000000100000010100100001000000000000000100100001000000100001000100000001000010100001001000000000000000100001001000000001001000010000000100000101001000100010000100000010000001000010000100001000000100010000100000010001000010000001001000000100001000100000010000010001000001010001001000100010000000100000100000010001000010000001000100001000000100100000010000100010000001000001000100001000000100;
 	localparam madeo     = 40'd0;
-	localparam Rick_Roll_length = 10'd480;
+	localparam Rick_Roll_length = 10'd288;
 	localparam yare_yare_length = 10'd480;
 	localparam madeo_length     = 10'd480;
-	localparam speed            = 17'49999;
+	localparam Rick_Roll_speed  = 17'd29999;
+	localparam yare_yare_speed  = 17'd24999;
+	localparam madeo_speed      = 17'd49999;
+
 	integer i;
 
 	localparam IDLE = 3'd0, NOTE_GET = 3'd1, OFFSET = 3'd2, FINISH = 3'd3;
@@ -59,7 +34,8 @@ module shift_load (
 	reg [500:0] song_bits ;      // storage the selection song bits
 	reg [9:0]  song_length;
 	reg [16:0]   cnt_time;        // time counter
-	reg [19:0]  note_range;      
+	reg [19:0]  note_range;
+	reg [16:0]  speed;      
 
 
 	always @(posedge clk or posedge rst) begin
@@ -78,16 +54,19 @@ module shift_load (
 		2'd1: begin
 			song_bits[500 -: Rick_Roll_length] = Rick_Roll;
 			song_length = Rick_Roll_length;
+			speed       = Rick_Roll_speed;
 		end
 
 		2'd2: begin
 			song_bits[500 -: yare_yare_length] = yare_yare;
 		 	song_length = yare_yare_length;
+			speed       = yare_yare_speed;
 		 end
 
 	 	 2'd3: begin
 		 	song_bits[500 -: madeo_length] = madeo;
 		 	song_length = madeo_length;
+			speed       = madeo_speed;
 		 end
 
 		endcase
@@ -151,7 +130,7 @@ module shift_load (
 	always @(posedge clk or posedge rst or posedge delete) begin
 		if(rst) combo <= 8'd0;
 		else if(delete == 1'd1) combo <= combo + 8'd1;
-		else if(delete == 1'd0 && note_range[19] == 1'd1) combo <= 8'd0;
+		else if(delete == 1'd0 && (note_range[19] || note_range[18]) == 1'd1) combo <= 8'd0;
 	end
 
 
@@ -193,5 +172,26 @@ module shift_load (
 		else if(NS == FINISH) finish <= 1'd1;
 		else                  finish <= 1'd0;
 	end
+
+
+// IDLE initial state
+always @(posedge clk ) begin
+	if(NS == IDLE) begin
+
+		note_R = 10'd0;
+		note_B = 10'd0;
+		offset = 1'd0;
+		note_R_judge = 1'd0;
+		note_B_judge = 1'd0;
+		combo        = 8'd0;
+		finish       = 1'd0;
+		index        = 10'd0;   
+		song_bits    = 501'd0;
+		song_length  = 10'd0;
+		cnt_time     = 17'd0;
+		note_range   = 20'd0;
+		speed        = 17'd0;
+	end
+end
 
 endmodule

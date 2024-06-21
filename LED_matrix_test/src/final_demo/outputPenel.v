@@ -59,8 +59,8 @@ reg [1:0] CS, NS;
 reg [6:0] col;    // column count
 reg [3:0] row;    // row count
 
-parameter MENU = 2'd0, PLAY = 2'd1, FINISH = 2'd2;
-parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
+localparam START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
+localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 
     //FSM
     always @(posedge clk or posedge rst) begin
@@ -122,6 +122,17 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
 
         else 
         case (state)
+
+            START:
+            begin
+                R0 <= menuMap[6143-(row*64+col)*3];
+                G0 <= menuMap[6142-(row*64+col)*3];
+                B0 <= menuMap[6141-(row*64+col)*3];
+                R0 <= menuMap[3071-(row*64+col)*3];
+                G0 <= menuMap[3070-(row*64+col)*3];
+                B0 <= menuMap[3069-(row*64+col)*3];
+            end
+
             MENU:
             begin
                 R0 <= menuMap[6143-(row*64+col)*3];
@@ -131,6 +142,7 @@ parameter IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                 G0 <= menuMap[3070-(row*64+col)*3];
                 B0 <= menuMap[3069-(row*64+col)*3];
             end
+            
             PLAY:
             begin
                 if(row == 3) begin    

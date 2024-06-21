@@ -1,11 +1,14 @@
 module shift_load (
-	input           clk,
-	input           rst,  
+	input            clk,
+	input            rst,  
 	input      [1:0] song,      // song selection
+	input            delete,
 	output reg [9:0] note_R,
 	//output reg [9:0] note_G,
 	output reg [9:0] note_B,
 	output reg [2:0] offset,    // pixel counter
+	output  		 note_R_judge,
+	output           note_B_judge,
 	output reg       finish 	// the idication of song end
 );
 
@@ -15,6 +18,7 @@ module shift_load (
 	localparam Rick_Roll_length = 10'd40;
 	localparam yare_yare_length = 10'd40;
 	localparam madeo_length     = 10'd40;
+	localparam speed            = 17'49999;
 	integer i;
 
 	localparam IDLE = 3'd0, NOTE_GET = 3'd1, OFFSET = 3'd2, FINISH = 3'd3;
@@ -64,7 +68,7 @@ module shift_load (
 
 		IDLE:	  NS = (song != 2'd0) 		  ? NOTE_GET : IDLE;
 
-		NOTE_GET: NS = (cnt_time == 17'd99999)	  ? OFFSET   : NOTE_GET;
+		NOTE_GET: NS = (cnt_time == speed)	  ? OFFSET   : NOTE_GET;
 
 		OFFSET:   NS = (index == song_length >> 1) ? FINISH   : NOTE_GET;
 
@@ -80,7 +84,7 @@ module shift_load (
 	always @(posedge clk or posedge rst) begin
 		if(rst) cnt_time <= 17'd0; 
 		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 17'd1;
-		else if(cnt_time > 17'd99999)   cnt_time <= 17'd0;
+		else if(cnt_time > speed)     cnt_time <= 17'd0;
 		else                          cnt_time <= cnt_time;
 	end
 
@@ -106,10 +110,12 @@ module shift_load (
 	end
 
 // note range
-	always @(posedge clk or posedge rst) begin
+	always @(posedge clk or posedge rst posedge delete) begin
 		if(rst) 				note_range <= 20'd0;
-		else if(NS == NOTE_GET) note_range = song_bits[100 - 2 * index -: 20];
+		else if(delete)         note_range <= {note_range[19:18],2'd0,note_range[15:0]};
+		else if(NS == NOTE_GET) note_range = {note_range[17:0], song_bits[100-2*index-:2]};
 		else 					note_range = note_range;
+		
 	end
 
 	always @(*) begin
@@ -119,12 +125,13 @@ module shift_load (
 			note_B = 10'd0;
 		end  
 		else begin
+			
 				
 			for ( i=0 ; i<10;i=i+1 ) begin
 				if(note_range[19-i*2-:2] == 2'd1) begin
 					note_R[i] = 1'd1;
 					//note_G[i] = 1'd0;
-					note_B[i]<= 1'd0;
+					note_B[i] = 1'd0;
 				end	
 				else if(note_range[19-i*2-:2] == 2'd2) begin
 					note_R[i] = 1'd0;
@@ -139,6 +146,9 @@ module shift_load (
 			end
 		end
 	end
+
+	assign note_R_judge = note_R[1];
+	assign note_B_judge = note_B[1];
 
 //finish
 	always @(posedge clk or posedge rst) begin

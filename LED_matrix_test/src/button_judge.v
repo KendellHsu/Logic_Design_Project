@@ -17,7 +17,6 @@ module button_judge (
         end else begin
             // Reset delete signals at the start of each cycle
             delete_note <= 1'b0;
-
             if (red_button) begin
                 if (node_R) begin
                     delete_note <= 1'b1;
@@ -40,6 +39,11 @@ module button_judge (
                         default: score <= 2'b00;           // none
                     endcase
                 end
+            end
+
+            else begin
+                score <= score;
+                delete_note <= delete_note;
             end
         end
     end

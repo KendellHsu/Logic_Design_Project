@@ -1,6 +1,7 @@
 module shift_load (
 	input            clk,
-	input            rst,  
+	input            rst,
+	input            yellow_button,  
 	input      [1:0] song,      // song selection
 	input            delete,
 	output reg [9:0] note_R,
@@ -72,7 +73,7 @@ module shift_load (
 
 		OFFSET:   NS = (index == song_length >> 1) ? FINISH   : NOTE_GET;
 
-		FINISH:   NS = IDLE;
+		FINISH:   NS = (yellow_button == 1'd1) ? IDLE : FINISH;
 
 		default:  NS = IDLE;
 

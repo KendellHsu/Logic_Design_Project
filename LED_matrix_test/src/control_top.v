@@ -3,28 +3,14 @@
 `include "drawNode.v"
 `include "clk_div.v"
 `include "buton_judge.v"
+`include "Score.v"
 module control(
     input clk,
     input rst,
-    input bottom,
-    input red_botton,
-    input blue_botton,
-    output reg A, 
-    output reg B,
-    output reg C,
-    output reg D,
-    output reg R0,
-    output reg G0,
-    output reg B0,
-    output reg R1,
-    output reg G1,
-    output reg B1,
-    output reg OE,
-    output reg LAT
-);
-
-    wire clk_div;
     //input bottom,
+    input red_button,
+    input blue_button,
+    input yellow_button,
     output A, 
     output B,
     output C,
@@ -52,6 +38,17 @@ module control(
     wire [191:0] bitmap5;
     wire [191:0] bitmap6;
 
+    wire [1:0] song_conform;
+    reg  [1:0] song_select;
+
+    assign song_confirm = (yellow_button)? song_select : 2'd0;
+
+    always @(*) begin
+        song_select =(red_button)  ? song_select - 2'd1:
+                     (blue_button) ? song_select + 2'd1:
+                                     song_select;
+    end
+
     clk_div clk_div_0(
         .clk(clk),
         .rst(rst),
@@ -61,10 +58,14 @@ module control(
     shift_load SH1(
         .clk(clk_shft),
         .rst(rst),
-        .song(2'b1),
+        .yellow_button(yellow_button),
+        .song(song_confirm),
+        .delete()        //
         .note_R(note_R),
         .note_B(note_B),
         .offset(offset),
+        .note_R_judge(),   //
+        .note_B_judge(),   //
         .finish(finish)
         );
     drawNode DN1(
@@ -104,4 +105,18 @@ module control(
         .OE(OE),
         .LAT(LAT)
     ); 
+
+    button_judge BJ1(
+        .clk(clk),
+        .rst(rst),
+        .red_button(red_button),
+        .blue_button(blue_button),
+        .offset(offset),
+        .node_R(note_R_judge),
+        .node_B(note_B_judge),
+        .delete_red_node()    //need to fix
+    )
+
+
+
 endmodule

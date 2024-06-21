@@ -1,14 +1,15 @@
 module drawNode(
     input [9:0] red_notes,  // 9-bit input for the notes
     input [9:0] blue_notes,
+    input rst,
     input [2:0] offset,
-    output reg [191:0] bitmap0 = 0,
-    output reg [191:0] bitmap1 = 0,
-    output reg [191:0] bitmap2 = 0,
-    output reg [191:0] bitmap3 = 0,
-    output reg [191:0] bitmap4 = 0,
-    output reg [191:0] bitmap5 = 0,
-    output reg [191:0] bitmap6 = 0 // 7x(64*3) output bitmap
+    output reg [191:0] bitmap0,
+    output reg [191:0] bitmap1,
+    output reg [191:0] bitmap2,
+    output reg [191:0] bitmap3,
+    output reg [191:0] bitmap4,
+    output reg [191:0] bitmap5,
+    output reg [191:0] bitmap6  // 7x(64*3) output bitmap
 );
 
 // Define bitmaps for Note A and Note B
@@ -30,25 +31,34 @@ localparam blue_bitmap6 = 21'b000000111111111000000;
 
 integer i;
 
-always @(offset) begin
+always @(*) begin
+     if(rst) begin
+         bitmap0 = 192'd0;
+         bitmap1 = 192'd0;
+         bitmap2 = 192'd0;
+         bitmap3 = 192'd0;
+         bitmap4 = 192'd0;
+         bitmap5 = 192'd0;
+         bitmap6 = 192'd0;
+    end
     for (i = 0; i < 10; i = i + 1 ) begin
         if (red_notes[i]) begin
-            bitmap0[i*7*3-offset*3+:21] <= red_bitmap0;
-            bitmap1[i*7*3-offset*3+:21] <= red_bitmap1;
-            bitmap2[i*7*3-offset*3+:21] <= red_bitmap2;
-            bitmap3[i*7*3-offset*3+:21] <= red_bitmap3;
-            bitmap4[i*7*3-offset*3+:21] <= red_bitmap4;
-            bitmap5[i*7*3-offset*3+:21] <= red_bitmap5;
-            bitmap6[i*7*3-offset*3+:21] <= red_bitmap6;
+            bitmap0[i*7*3-offset*3+:21] = red_bitmap0;
+            bitmap1[i*7*3-offset*3+:21] = red_bitmap1;
+            bitmap2[i*7*3-offset*3+:21] = red_bitmap2;
+            bitmap3[i*7*3-offset*3+:21] = red_bitmap3;
+            bitmap4[i*7*3-offset*3+:21] = red_bitmap4;
+            bitmap5[i*7*3-offset*3+:21] = red_bitmap5;
+            bitmap6[i*7*3-offset*3+:21] = red_bitmap6;
         end
         else if (blue_notes[i]) begin
-            bitmap0[i*7*3-offset*3+:21] <= blue_bitmap0;
-            bitmap1[i*7*3-offset*3+:21] <= blue_bitmap1;
-            bitmap2[i*7*3-offset*3+:21] <= blue_bitmap2;
-            bitmap3[i*7*3-offset*3+:21] <= blue_bitmap3;
-            bitmap4[i*7*3-offset*3+:21] <= blue_bitmap4;
-            bitmap5[i*7*3-offset*3+:21] <= blue_bitmap5;
-            bitmap6[i*7*3-offset*3+:21] <= blue_bitmap6;
+            bitmap0[i*7*3-offset*3+:21] = blue_bitmap0;
+            bitmap1[i*7*3-offset*3+:21] = blue_bitmap1;
+            bitmap2[i*7*3-offset*3+:21] = blue_bitmap2;
+            bitmap3[i*7*3-offset*3+:21] = blue_bitmap3;
+            bitmap4[i*7*3-offset*3+:21] = blue_bitmap4;
+            bitmap5[i*7*3-offset*3+:21] = blue_bitmap5;
+            bitmap6[i*7*3-offset*3+:21] = blue_bitmap6;
         end
         else begin
             bitmap0[i*7*3-offset*3+:21] = 0;
@@ -60,7 +70,7 @@ always @(offset) begin
             bitmap6[i*7*3-offset*3+:21] = 0;
         end
     end
-    // //è™•ç†ç¬¬ä¸€å€‹ä½ç½®
+    // //??•ç?†ç¬¬ä¸??‹ä?ç½®
     // if (red_notes[0]) begin
     //     bitmap0[20-offset:0] <= red_bitmap0;
     //     bitmap1[20-offset:0] <= red_bitmap1;

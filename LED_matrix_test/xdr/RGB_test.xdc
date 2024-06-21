@@ -34,7 +34,7 @@ create_generated_clock -name clk_div -divide_by 125000000 -source [get_ports clk
 ##Buttons
 
 set_property -dict { PACKAGE_PIN D19   IOSTANDARD LVCMOS33 } [get_ports { rst }]; #IO_L4P_T0_35 Sch=btn[0]
-#set_property -dict { PACKAGE_PIN D20   IOSTANDARD LVCMOS33 } [get_ports { btn[1] }]; #IO_L4N_T0_35 Sch=btn[1]
+#set_property -dict { PACKAGE_PIN D20   IOSTANDARD LVCMOS33 } [get_ports { bottom }]; #IO_L4N_T0_35 Sch=btn[1]
 #set_property -dict { PACKAGE_PIN L20   IOSTANDARD LVCMOS33 } [get_ports { btn[2] }]; #IO_L9N_T1_DQS_AD3N_35 Sch=btn[2]
 #set_property -dict { PACKAGE_PIN L19   IOSTANDARD LVCMOS33 } [get_ports { btn[3] }]; #IO_L9P_T1_DQS_AD3P_35 Sch=btn[3]
 
@@ -105,8 +105,8 @@ set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports { B1 }];
 set_property -dict { PACKAGE_PIN V18   IOSTANDARD LVCMOS33 } [get_ports { OE }]; #IO_L21N_T3_DQS_34 Sch=ar[9]
 set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { LAT }]; #IO_L9P_T1_DQS_34 Sch=ar[10]
 set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { clk_shft }]; #IO_L19N_T3_VREF_34 Sch=ar[11]
-#set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { ar[12] }]; #IO_L23N_T3_34 Sch=ar[12]
-#set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports { ar[13] }]; #IO_L23P_T3_34 Sch=ar[13]
+set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { red_button }]; #IO_L23N_T3_34 Sch=ar[12] .  # red button
+set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports { blue_button }]; #IO_L23P_T3_34 Sch=ar[13] .  # green button
 #set_property -dict { PACKAGE_PIN Y13   IOSTANDARD LVCMOS33 } [get_ports { a }]; #IO_L20N_T3_13 Sch=a
 
 ##Arduino Digital I/O On Outer Analog Header

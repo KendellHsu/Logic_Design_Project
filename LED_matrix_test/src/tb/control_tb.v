@@ -5,6 +5,9 @@ module tb;
     reg clk;
     reg rst;
     reg bottom;
+    reg red_button,
+    reg blue_button,
+    reg yellow_button,
     wire A; 
     wire B;
     wire C;
@@ -43,6 +46,9 @@ module tb;
         // Reset the design
         #10 rst = 0;
         //#20 bottom = 2'd1;
+        #10 red_button = 1;
+        #10 red_button = 1;
+        #10 yellow_button =1;
 
 
         // Run for a while

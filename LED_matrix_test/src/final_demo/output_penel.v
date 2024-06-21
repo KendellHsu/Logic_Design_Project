@@ -9,13 +9,6 @@ Three states control the LED matrix performance:
 IDLE: Initial state.
 GET: Retrieve the RGB data 64 times, and OE is pulled up in this state.
 TRANSMIT: Perform the LED operation, and LAT is pulled up in this state. Also, the OE signal needs to be pulled down,or the LED matrix won't perform.
-
-The test output for RGB:
-Multiples of 2 are white.
-Multiples of 4 are blue.
-Multiples of 8 are green.
-Multiples of 16 are red.
-Others aren't beaming.
 */
 
 module matrix (

@@ -2,9 +2,28 @@
 `include "shift.v"
 `include "drawNode.v"
 `include "clk_div.v"
+`include "buton_judge.v"
 module control(
     input clk,
     input rst,
+    input bottom,
+    input red_botton,
+    input blue_botton,
+    output reg A, 
+    output reg B,
+    output reg C,
+    output reg D,
+    output reg R0,
+    output reg G0,
+    output reg B0,
+    output reg R1,
+    output reg G1,
+    output reg B1,
+    output reg OE,
+    output reg LAT
+);
+
+    wire clk_div;
     //input bottom,
     output A, 
     output B,
@@ -85,5 +104,4 @@ module control(
         .OE(OE),
         .LAT(LAT)
     ); 
-    
 endmodule

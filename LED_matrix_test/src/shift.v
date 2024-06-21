@@ -10,6 +10,7 @@ module shift_load (
 	output reg [2:0] offset,    // pixel counter
 	output  		 note_R_judge,
 	output           note_B_judge,
+	output     [7:0] combo,
 	output reg       finish 	// the idication of song end
 );
 
@@ -111,13 +112,19 @@ module shift_load (
 	end
 
 // note range
-	always @(posedge clk or posedge rst posedge delete) begin
+	always @(posedge clk or posedge rst or posedge delete) begin
 		if(rst) 				note_range <= 20'd0;
-		else if(delete)         note_range <= {note_range[19:18],2'd0,note_range[15:0]};
+		else if(delete) 		note_range <= {note_range[19:18],2'd0,note_range[15:0]};
 		else if(NS == NOTE_GET) note_range = {note_range[17:0], song_bits[100-2*index-:2]};
 		else 					note_range = note_range;
-		
 	end
+
+	always @(posedge clk or posedge rst or posedge delete) begin
+		if(rst) combo <= 8'd0;
+		else if(delete == 1'd1) combo <= combo + 8'd1;
+		else if(delete == 1'd0 && note_range[19] == 1'd1) combo <= 8'd0;
+	end
+
 
 	always @(*) begin
 		if(rst) begin

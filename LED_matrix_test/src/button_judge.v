@@ -9,15 +9,14 @@ module button_judge (
     output reg delete_note,
     output reg [1:0] score      // output for score.v
 );
-
+    
     always @(posedge clk or posedge rst) begin
         if (rst) begin
             score <= 2'b00;
             delete_note <= 1'b0;
         end else begin
             // Reset delete signals at the start of each cycle
-            delete_red_node <= 1'b0;
-            delete_blue_node <= 1'b0;
+            delete_note <= 1'b0;
 
             if (red_button) begin
                 if (node_R) begin

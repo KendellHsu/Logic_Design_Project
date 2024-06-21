@@ -14,12 +14,41 @@ module shift_load (
 	output reg       finish 	// the idication of song end
 );
 
-	localparam Rick_Roll = 40'b0000000110011000100110000010100110000110;
-	localparam yare_yare = 40'd0;
+	localparam Rick_Roll = 480'b01000100110000000100110001000000
+								01000011010001000100000000000000
+								11001100010000001100010011000000
+								11000001010011000100000000000000
+								01001100010000001100010001000000
+								01000011110001001100000000000000
+								11000100110000000100110001000000
+								01000001010011001100110001000000
+								11000001000011000100001100000100
+								01000011000001000100001100000100
+								11000001000011001100000100000100
+								01000001110001001100110011000000
+								11000011000001000100001100000100
+								01000011000001001100000100001100
+								11000001000001000100001100000100;
+
+	localparam yare_yare = 480'b01000100110000000100110001000000
+							    01000011010001000100000000000000
+							    11001100010000001100010011000000
+							    11000001010011000100000000000000
+							    01001100010000001100010001000000
+							    01000011110001001100000000000000
+							    11000100110000000100110001000000
+							    01000001010011001100110001000000
+							    11000001000011000100001100000100
+							    01000011000001000100001100000100
+							    11000001000011001100000100000100
+							    01000001110001001100110011000000
+							    11000011000001000100001100000100
+							    01000011000001001100000100001100
+							    11000001000001000100001100000100;
 	localparam madeo     = 40'd0;
-	localparam Rick_Roll_length = 10'd40;
-	localparam yare_yare_length = 10'd40;
-	localparam madeo_length     = 10'd40;
+	localparam Rick_Roll_length = 10'd480;
+	localparam yare_yare_length = 10'd480;
+	localparam madeo_length     = 10'd480;
 	localparam speed            = 17'49999;
 	integer i;
 
@@ -27,7 +56,7 @@ module shift_load (
 
 	reg [9:0]   index;           // offset counter
 	reg [1:0]   CS, NS;  
-	reg [100:0] song_bits ;      // storage the selection song bits
+	reg [500:0] song_bits ;      // storage the selection song bits
 	reg [9:0]  song_length;
 	reg [16:0]   cnt_time;        // time counter
 	reg [19:0]  note_range;      
@@ -40,24 +69,24 @@ module shift_load (
 
 	always @(*) begin
 		if(rst) begin 
-			song_bits = 101'd0;
+			song_bits = 501'd0;
 			song_length = 10'd0;
 		end
 		
 		case(song)
 
 		2'd1: begin
-			song_bits[100 -: Rick_Roll_length] = Rick_Roll;
+			song_bits[500 -: Rick_Roll_length] = Rick_Roll;
 			song_length = Rick_Roll_length;
 		end
 
 		2'd2: begin
-			song_bits[100 -: yare_yare_length] = yare_yare;
+			song_bits[500 -: yare_yare_length] = yare_yare;
 		 	song_length = yare_yare_length;
 		 end
 
 	 	 2'd3: begin
-		 	song_bits[100 -: madeo_length] = madeo;
+		 	song_bits[500 -: madeo_length] = madeo;
 		 	song_length = madeo_length;
 		 end
 

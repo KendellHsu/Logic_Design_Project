@@ -16,11 +16,10 @@ module state_button (
 
 
     always @(posedge clk or posedge rst) begin
-        if(rst) last_button <= 3'd0;
-        else    begin
-            if(red_button    == 1'd1)  signal[0] = 1'd0;
-            if(blue_button   == 1'd1)  signal[1] = 1'd0;
-            if(yellow_button == 1'd1)  signal[2] = 1'd0; 
+        if(rst) begin
+            last_button <= 3'd0;
+        end
+        else begin
             last_button <= {yellow_button, blue_button, red_button};
         end
     end
@@ -30,12 +29,15 @@ module state_button (
         else begin
         if(red_button == 1'd1 && last_button[0] == 1'd0)         signal[0] <= 1'd1;
         else if (red_button == 1'd0 && last_button[0] == 1'd0)   signal[0] <= 1'd0;
+        else if (red_button    == 1'd1)                          signal[0] <= 1'd0;
         else                                                     signal[0] <= 1'd0;
         if(blue_button == 1'd1 && last_button[1] == 1'd0)        signal[1] <= 1'd1;
         else if(blue_button == 1'd0 && last_button[1] == 1'd0)   signal[1] <= 1'd0;
+        else if(blue_button   == 1'd1)                           signal[1] <= 1'd0;
         else                                                     signal[1] <= 1'd0;
         if(yellow_button == 1'd1 && last_button[2] == 1'd0)      signal[2] <= 1'd1;
         else if(yellow_button == 1'd0 && last_button[2] == 1'd0) signal[2] <= 1'd0;
+        else if(yellow_button == 1'd1)                           signal[2] <= 1'd0;
         else                                                     signal[2] <= 1'd0;
         end
     end
@@ -56,7 +58,7 @@ module state_button (
     always @(*) begin
         case(CS)
 
-        START:  NS = (signal[0] || signal[1] || signal[2]) ? PLAY : MENU;
+        START:  NS = (signal[0] || signal[1] || signal[2]) ? MENU : START;
 
         MENU:   NS = (signal[2] && song_select != 2'd0)   ? PLAY : MENU;
 
@@ -80,13 +82,6 @@ module state_button (
 
     always @(*) begin
         song_confirm =(signal == 3'd4) ? song_select : 2'd0;
-    end
-
-    always @(posedge clk) begin
-        if(CS == START) begin
-            last_button <= 3'd0;
-            signal      <= 3'd0;
-        end
     end
 
     

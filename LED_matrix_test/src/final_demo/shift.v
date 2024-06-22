@@ -8,8 +8,8 @@ module shift_load (
 	//output reg [9:0] note_G,
 	output reg [9:0] note_B,
 	output reg [2:0] offset,    // pixel counter
-	output      	 note_R_judge,
-	output           note_B_judge,
+	output reg     	 note_R_judge,
+	output reg       note_B_judge,
 	output reg [7:0] combo,
 	output reg       finish 	// the idication of song end
 );
@@ -43,10 +43,17 @@ module shift_load (
 		else    CS <= NS;
 	end
 
-	always @(*) begin
+	always @(posedge clk or posedge rst) begin
 		if(rst) begin 
-			song_bits = 501'd0;
+			song_bits   = 501'd0;
 			song_length = 10'd0;
+			speed       = 17'd0;
+		end
+
+		else if(CS == FINISH) begin
+			song_bits   = 501'd0;
+			song_length = 10'd0;
+			speed       = 17'd0;
 		end
 		
 		case(song)
@@ -95,6 +102,7 @@ module shift_load (
 		if(rst) cnt_time <= 17'd0; 
 		else if(CS == NOTE_GET)       cnt_time <= cnt_time + 17'd1;
 		else if(cnt_time > speed)     cnt_time <= 17'd0;
+		else if(CS ==FINISH) 		  cnt_time <= 17'd0;
 		else                          cnt_time <= cnt_time;
 	end
 
@@ -113,6 +121,10 @@ module shift_load (
 			offset <= offset + 3'd1;
 		end
 
+		else if(CS == FINISH) begin
+			index <= 10'd0;
+		end
+
 		else begin
 			offset <= offset;
 			index <= index;
@@ -123,14 +135,16 @@ module shift_load (
 	always @(posedge clk or posedge rst or posedge delete) begin
 		if(rst) 				note_range <= 20'd0;
 		else if(delete) 		note_range <= {note_range[19:18],2'd0,note_range[15:0]};
-		else if(NS == NOTE_GET) note_range = {note_range[17:0], song_bits[100-2*index-:2]};
-		else 					note_range = note_range;
+		else if(NS == NOTE_GET) note_range <= {note_range[17:0], song_bits[100-2*index-:2]};
+		else if(CS == FINISH)   note_range <= 20'd0;
+		else 					note_range <= note_range;
 	end
 
 	always @(posedge clk or posedge rst or posedge delete) begin
 		if(rst) combo <= 8'd0;
 		else if(delete == 1'd1) combo <= combo + 8'd1;
 		else if(delete == 1'd0 && (note_range[19] || note_range[18]) == 1'd1) combo <= 8'd0;
+		else if(CS == FINISH)   combo <= 8'd0;
 	end
 
 
@@ -160,11 +174,12 @@ module shift_load (
 						note_B[i] = 1'd0;
 				end					
 			end
+			note_B_judge = note_B[1];
+			note_R_judge = note_R[1];
 		end
 	end
 
-	assign note_R_judge = note_R[1];
-	assign note_B_judge = note_B[1];
+
 
 //finish
 	always @(posedge clk or posedge rst) begin
@@ -172,24 +187,5 @@ module shift_load (
 		else if(NS == FINISH) finish <= 1'd1;
 		else                  finish <= 1'd0;
 	end
-
-
-// IDLE initial state
-always @(posedge clk ) begin
-	if(NS == IDLE) begin
-
-		note_R = 10'd0;
-		note_B = 10'd0;
-		offset = 1'd0;
-		combo        = 8'd0;
-		finish       = 1'd0;
-		index        = 10'd0;   
-		song_bits    = 501'd0;
-		song_length  = 10'd0;
-		cnt_time     = 17'd0;
-		note_range   = 20'd0;
-		speed        = 17'd0;
-	end
-end
 
 endmodule

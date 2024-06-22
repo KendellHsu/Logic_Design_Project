@@ -25,6 +25,7 @@ initial begin
     num8 = 0;
     num9 = 0;
 end
+
 // Define bitmaps for Note A and Note B
 localparam num0_0 = 30'b000000000000000000000000000000;
 localparam num1_0 = 30'b000000000111111111111000000000;

@@ -3,9 +3,9 @@
 `include "draw_Node.v"
 `include "clk_div.v"
 `include "button_judge.v"
-`include "Score.v"
+`include "score.v"
 `include "draw_score.v"
-
+`include "draw_main_scene"
 
 module control(
     input clk,

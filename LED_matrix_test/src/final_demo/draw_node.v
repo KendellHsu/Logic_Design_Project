@@ -71,60 +71,69 @@ always @(*) begin
         end
     end
     if (red_notes[0]) begin
-        bitmap0[0:20-offset*3] = red_bitmap0[20-offset*3:0];
-        bitmap1[0:20-offset*3] = red_bitmap1[20-offset*3:0];
-        bitmap2[0:20-offset*3] = red_bitmap2[20-offset*3:0];
-        bitmap3[0:20-offset*3] = red_bitmap3[20-offset*3:0];
-        bitmap4[0:20-offset*3] = red_bitmap4[20-offset*3:0];
-        bitmap5[0:20-offset*3] = red_bitmap5[20-offset*3:0];
-        bitmap6[0:20-offset*3] = red_bitmap6[20-offset*3:0];
+        for (i = 0; i <= 20 - offset * 3; i = i + 1) begin
+            bitmap0[i] = red_bitmap0[i + offset * 3];
+            bitmap1[i] = red_bitmap1[i + offset * 3];
+            bitmap2[i] = red_bitmap2[i + offset * 3];
+            bitmap3[i] = red_bitmap3[i + offset * 3];
+            bitmap4[i] = red_bitmap4[i + offset * 3];
+            bitmap5[i] = red_bitmap5[i + offset * 3];
+            bitmap6[i] = red_bitmap6[i + offset * 3];
+        end
     end
     else if (blue_notes[0]) begin
-        bitmap0[0:20-offset*3] = blue_bitmap0[20-offset*3:0];
-        bitmap1[0:20-offset*3] = blue_bitmap1[20-offset*3:0];
-        bitmap2[0:20-offset*3] = blue_bitmap2[20-offset*3:0];
-        bitmap3[0:20-offset*3] = blue_bitmap3[20-offset*3:0];
-        bitmap4[0:20-offset*3] = blue_bitmap4[20-offset*3:0];
-        bitmap5[0:20-offset*3] = blue_bitmap5[20-offset*3:0];
-        bitmap6[0:20-offset*3] = blue_bitmap6[20-offset*3:0];
+        for (i = 0; i <= 20 - offset * 3; i = i + 1) begin
+                bitmap0[i] = blue_bitmap0[i + offset * 3];
+                bitmap1[i] = blue_bitmap1[i + offset * 3];
+                bitmap2[i] = blue_bitmap2[i + offset * 3];
+                bitmap3[i] = blue_bitmap3[i + offset * 3];
+                bitmap4[i] = blue_bitmap4[i + offset * 3];
+                bitmap5[i] = blue_bitmap5[i + offset * 3];
+                bitmap6[i] = blue_bitmap6[i + offset * 3];
+            end
     end
     else begin
-        bitmap0[0:20-offset*3] = 0;
-        bitmap1[0:20-offset*3] = 0;
-        bitmap2[0:20-offset*3] = 0;
-        bitmap3[0:20-offset*3] = 0;
-        bitmap4[0:20-offset*3] = 0;
-        bitmap5[0:20-offset*3] = 0;
-        bitmap6[0:20-offset*3] = 0;
+        for (i = 0; i <= 20 - offset * 3; i = i + 1) begin
+                bitmap0[i] = 0;
+                bitmap1[i] = 0;
+                bitmap2[i] = 0;
+                bitmap3[i] = 0;
+                bitmap4[i] = 0;
+                bitmap5[i] = 0;
+                bitmap6[i] = 0;
+            end
     end
-    if (red_notes[9]) begin
-        bitmap0[189-offset*3:191] = red_bitmap0[20-:offset*3];
-        bitmap1[189-offset*3:191] = red_bitmap1[20-:offset*3];
-        bitmap2[189-offset*3:191] = red_bitmap2[20-:offset*3];
-        bitmap3[189-offset*3:191] = red_bitmap3[20-:offset*3];
-        bitmap4[189-offset*3:191] = red_bitmap4[20-:offset*3];
-        bitmap5[189-offset*3:191] = red_bitmap5[20-:offset*3];
-        bitmap6[189-offset*3:191] = red_bitmap6[20-:offset*3];
+   if (red_notes[9]) begin
+        for (i = 0; i < offset * 3; i = i + 1) begin
+            bitmap0[191-i] = red_bitmap0[20-i];
+            bitmap1[191-i] = red_bitmap1[20-i];
+            bitmap2[191-i] = red_bitmap2[20-i];
+            bitmap3[191-i] = red_bitmap3[20-i];
+            bitmap4[191-i] = red_bitmap4[20-i];
+            bitmap5[191-i] = red_bitmap5[20-i];
+            bitmap6[191-i] = red_bitmap6[20-i];
+        end
+    end else if (blue_notes[9]) begin
+        for (i = 0; i < offset * 3; i = i + 1) begin
+            bitmap0[191-i] = blue_bitmap0[20-i];
+            bitmap1[191-i] = blue_bitmap1[20-i];
+            bitmap2[191-i] = blue_bitmap2[20-i];
+            bitmap3[191-i] = blue_bitmap3[20-i];
+            bitmap4[191-i] = blue_bitmap4[20-i];
+            bitmap5[191-i] = blue_bitmap5[20-i];
+            bitmap6[191-i] = blue_bitmap6[20-i];
+        end
+    end else begin
+        for (i = 0; i < offset * 3; i = i + 1) begin
+            bitmap0[191-i] = 0;
+            bitmap1[191-i] = 0;
+            bitmap2[191-i] = 0;
+            bitmap3[191-i] = 0;
+            bitmap4[191-i] = 0;
+            bitmap5[191-i] = 0;
+            bitmap6[191-i] = 0;
+        end
     end
-    else if (blue_notes[9]) begin
-        bitmap0[189-offset*3:191] = blue_bitmap0[20-:offset*3];
-        bitmap1[189-offset*3:191] = blue_bitmap1[20-:offset*3];
-        bitmap2[189-offset*3:191] = blue_bitmap2[20-:offset*3];
-        bitmap3[189-offset*3:191] = blue_bitmap3[20-:offset*3];
-        bitmap4[189-offset*3:191] = blue_bitmap4[20-:offset*3];
-        bitmap5[189-offset*3:191] = blue_bitmap5[20-:offset*3];
-        bitmap6[189-offset*3:191] = blue_bitmap6[20-:offset*3];
-    end
-    else begin
-        bitmap0[189-offset*3:191] = 0;
-        bitmap1[189-offset*3:191] = 0;
-        bitmap2[189-offset*3:191] = 0;
-        bitmap3[189-offset*3:191] = 0;
-        bitmap4[189-offset*3:191] = 0;
-        bitmap5[189-offset*3:191] = 0;
-        bitmap6[189-offset*3:191] = 0;
-    end
-    
 end
 
 endmodule

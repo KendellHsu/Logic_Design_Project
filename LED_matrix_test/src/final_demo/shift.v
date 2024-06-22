@@ -8,9 +8,9 @@ module shift_load (
 	//output reg [9:0] note_G,
 	output reg [9:0] note_B,
 	output reg [2:0] offset,    // pixel counter
-	output  		 note_R_judge,
+	output      	 note_R_judge,
 	output           note_B_judge,
-	output     [7:0] combo,
+	output reg [7:0] combo,
 	output reg       finish 	// the idication of song end
 );
 
@@ -181,8 +181,6 @@ always @(posedge clk ) begin
 		note_R = 10'd0;
 		note_B = 10'd0;
 		offset = 1'd0;
-		note_R_judge = 1'd0;
-		note_B_judge = 1'd0;
 		combo        = 8'd0;
 		finish       = 1'd0;
 		index        = 10'd0;   

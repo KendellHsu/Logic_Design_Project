@@ -1,9 +1,10 @@
-`include "outputPenel.v"
+`include "output_penel.v"
 `include "shift.v"
-`include "drawNode.v"
+`include "draw_Node.v"
 `include "clk_div.v"
-`include "buton_judge.v"
+`include "button_judge.v"
 `include "Score.v"
+`include "draw_score.v"
 
 
 module control(
@@ -29,7 +30,7 @@ module control(
 );
     
     //wire for shift 
-    wire [1:0]  song_conform;
+    wire [1:0]  song_confirm;
     wire [9:0]  note_R;
     wire [9:0]  note_B;
     wire [2:0]  offset;
@@ -68,20 +69,18 @@ module control(
     wire [15:0] score;
 
 
-
-/*=========================================================================================================*/
     reg  [1:0] song_select;
     reg  [1:0] state;
     reg  [1:0] CS, NS;
-
+    parameter START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
 
     assign song_confirm = (yellow_button)? song_select : 2'd0;
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk_shft or posedge rst) begin
         if(rst) song_select = 1'd0;
 
         else if(NS == MENU) begin
-            if(red_button == 1'd1  && (song_select == 2'd1) == 1'd1) song_select = 2'd3
+            if(red_button == 1'd1  && (song_select == 2'd1) == 1'd1) song_select = 2'd3;
 
             else if(red_button == 1'd1) song_select = song_select - 2'd1;
    
@@ -95,17 +94,19 @@ module control(
         else        song_select = song_select;
     end
 
-    parameter START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
+ 
 
-    always @(posedge clk or posedge rst) begin
-        if(rst) CS <= START;
+    always @(posedge clk_shft or posedge rst) begin
+        if(rst) begin 
+            CS <= START;
+        end
         else    CS <= NS; 
     end
 
     always @(*) begin
         case(CS)
 
-        START:  NS = ((red_button || blue_button) == 1'd1) ? MENU : START;
+        START:  NS = (red_button || blue_button) ? MENU : START;
         
         MENU:   NS = (yellow_button == 1'd1 && (song_select != 2'd0)) ? PLAY : MENU;
 
@@ -117,13 +118,12 @@ module control(
 
     end
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk_shft or posedge rst) begin
         if(rst) state <= START;
         else    state <= NS;
     end
 
 
-/*=========================================submodule=====================================*/
 
     clk_div clk_div_0(
         .clk(clk),
@@ -136,7 +136,7 @@ module control(
         .rst(rst),
         .yellow_button(yellow_button),
         .song(song_confirm),
-        .delete(delete)        
+        .delete(delete),        
         .note_R(note_R),
         .note_B(note_B),
         .offset(offset),
@@ -205,11 +205,11 @@ module control(
         .offset(offset),
         .node_R(note_R_judge),
         .node_B(note_B_judge),
-        .delete_red_node(delete),    //need to fix
+        .delete_note(delete),    //need to fix
         .score(score_add)
     );
 
-    score SC1(
+    ScoreCounter SC1(
         .clk(clk),
         .reset(rst),
         .combo(combo),
@@ -219,16 +219,16 @@ module control(
 
     draw_score DS1(
         .score(score),
-        .num0(notesMap0),
-        .num1(notesMap1),
-        .num2(notesMap2),
-        .num3(notesMap3),
-        .num4(notesMap4),
-        .num5(notesMap5),
-        .num6(notesMap6),
-        .num7(notesMap7),
-        .num8(notesMap8),
-        .num9(notesMap9)
+        .num0(scoreMap0),
+        .num1(scoreMap1),
+        .num2(scoreMap2),
+        .num3(scoreMap3),
+        .num4(scoreMap4),
+        .num5(scoreMap5),
+        .num6(scoreMap6),
+        .num7(scoreMap7),
+        .num8(scoreMap8),
+        .num9(scoreMap9)
     );
 
 

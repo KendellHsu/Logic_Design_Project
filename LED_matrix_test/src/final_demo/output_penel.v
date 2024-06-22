@@ -121,9 +121,9 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                 R0 <= menuMap[6143-(row*64+col)*3];
                 G0 <= menuMap[6142-(row*64+col)*3];
                 B0 <= menuMap[6141-(row*64+col)*3];
-                R0 <= menuMap[3071-(row*64+col)*3];
-                G0 <= menuMap[3070-(row*64+col)*3];
-                B0 <= menuMap[3069-(row*64+col)*3];
+                R1 <= menuMap[3071-(row*64+col)*3];
+                G1 <= menuMap[3070-(row*64+col)*3];
+                B1 <= menuMap[3069-(row*64+col)*3];
             end
 
             MENU:
@@ -131,9 +131,9 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                 R0 <= menuMap[6143-(row*64+col)*3];
                 G0 <= menuMap[6142-(row*64+col)*3];
                 B0 <= menuMap[6141-(row*64+col)*3];
-                R0 <= menuMap[3071-(row*64+col)*3];
-                G0 <= menuMap[3070-(row*64+col)*3];
-                B0 <= menuMap[3069-(row*64+col)*3];
+                R1 <= menuMap[3071-(row*64+col)*3];
+                G1 <= menuMap[3070-(row*64+col)*3];
+                B1 <= menuMap[3069-(row*64+col)*3];
             end
             
             PLAY:
@@ -142,7 +142,7 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                     R0 <= scoreMap0[191-col*3];
                     G0 <= scoreMap0[190-col*3];
                     B0 <= scoreMap0[189-col*3];
-                    if (col==7b'6) begin
+                    if (col==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -157,7 +157,7 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                     R0 <= scoreMap1[191-col*3];
                     G0 <= scoreMap1[190-col*3];
                     B0 <= scoreMap1[189-col*3];
-                    if (col==7b'6) begin
+                    if (col==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -228,7 +228,7 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                     R0 <= scoreMap9[191-col*3];
                     G0 <= scoreMap9[190-col*3];
                     B0 <= scoreMap9[189-col*3];
-                    if (col==7b'6) begin
+                    if (col==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -251,7 +251,7 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
                     R0 <= 1'b0;
                     G0 <= 1'b0;
                     B0 <= 1'b0;
-                    if (col==7b'6) begin
+                    if (col==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;

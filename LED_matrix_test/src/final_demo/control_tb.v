@@ -4,10 +4,9 @@ module tb;
 
     reg clk;
     reg rst;
-    reg bottom;
-    reg red_button,
-    reg blue_button,
-    reg yellow_button,
+    reg red_button;
+    reg blue_button;
+    reg yellow_button;
     wire A; 
     wire B;
     wire C;
@@ -25,7 +24,9 @@ module tb;
     control c1(
         .clk(clk),
         .rst(rst),
-        //.bottom(bottom),
+        .red_button(red_button),
+        .blue_button(blue_button),
+        .yellow_button(yellow_button),
         .A(A),
         .B(B),
         .C(C),
@@ -43,12 +44,15 @@ module tb;
     initial begin
         clk = 0;
         rst = 1;
+        red_button = 0;
+        yellow_button = 0;
+        blue_button = 0;
         // Reset the design
         #10 rst = 0;
-        //#20 bottom = 2'd1;
-        #10 red_button = 1;
-        #10 red_button = 1;
-        #10 yellow_button =1;
+        #10000000 red_button = 1;
+        #10000000 red_button = 0;
+        #10000000 yellow_button =1;
+        #10000000 yellow_button =0;
 
 
         // Run for a while

@@ -84,18 +84,18 @@ localparam num9_4 = 30'b000000000000000000000000000000;
 
 localparam num0_5 = 30'b000000000000000000000000000000;
 localparam num1_5 = 30'b000000111111111111111111000000;
-localparam num2_5 = 30'b000000111000000000000000000000;
+localparam num2_5 = 30'b000000111000000000000011000000;
 localparam num3_5 = 30'b000000111000000000000000000000;
 localparam num4_5 = 30'b000000111111111111111111000000;
-localparam num5_5 = 30'b000000000000000000000111000000;
+localparam num5_5 = 30'b000000111111111111111111000000;
 localparam num6_5 = 30'b000000000000000000000111000000;
 localparam num7_5 = 30'b000000111000000000000111000000;
 localparam num8_5 = 30'b000000111111111111111111000000;
 localparam num9_5 = 30'b000000000000000000000000000000;
 
 localparam num0_6 = 30'b000000000000000000000000000000;
-localparam num1_6 = 30'b000000111111111111111111000000;
-localparam num2_6 = 30'b000000111000000000000000000000;
+localparam num1_6 = 30'b000000111111111111111110000000;
+localparam num2_6 = 30'b000000111000000000000110000000;
 localparam num3_6 = 30'b000000111000000000000000000000;
 localparam num4_6 = 30'b000000111000000000000000000000;
 localparam num5_6 = 30'b000000111111111111111111000000;
@@ -133,13 +133,13 @@ localparam num3_9 = 30'b000000111000000000000111000000;
 localparam num4_9 = 30'b000000111111111111111111000000;
 localparam num5_9 = 30'b000000000000000000000111000000;
 localparam num6_9 = 30'b000000000000000000000111000000;
-localparam num7_9 = 30'b000000000000000000000111000000;
+localparam num7_9 = 30'b000000111000000000000111000000;
 localparam num8_9 = 30'b000000111111111111111111000000;
 localparam num9_9 = 30'b000000000000000000000000000000;
 
 always @(score) begin
     
-    case(score%10)
+    case((score/10000)%10)
         0: begin
            num0[183:156] = num0_0;
            num1[183:156] = num1_0;
@@ -262,7 +262,7 @@ always @(score) begin
            end               
     endcase
         
-    case((score/10)%10)
+    case((score/1000)%10)
         0: begin
            num0[147:120] = num0_0;
            num1[147:120] = num1_0;
@@ -508,7 +508,7 @@ always @(score) begin
            end
     endcase
     
-    case((score/1000)%10)
+    case((score/10)%10)
         0: begin
            num0[75:48] = num0_0;
            num1[75:48] = num1_0;
@@ -632,7 +632,7 @@ always @(score) begin
            end
     endcase
        
-    case((score/10000)%10)
+    case(score%10)
         0: begin
            num0[39:12] = num0_0;
            num1[39:12] = num1_0;

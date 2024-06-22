@@ -69,14 +69,16 @@ module state_button (
         endcase
     end
 
-    always @(*) begin
+    always @(posedge clk or posedge rst) begin
         if(rst) song_select = 1'd1;
+        else begin
+        if     (signal == 3'd1 && song_select == 2'd1) song_select <= 2'd3;
+        else if(signal == 3'd1)                        song_select <= song_select - 2'd1;
+        else if(signal == 3'd2 && song_select == 2'd3) song_select <= 2'd1;
+        else if(signal == 3'd2)                        song_select <= song_select + 2'd1;
+        else                                           song_select <= song_select;
+        end
 
-        else if(signal == 3'd1 && song_select == 2'd1) song_select = 2'd3;
-        else if(signal == 3'd1)                        song_select = song_select - 2'd1;
-        else if(signal == 3'd2 && song_select == 2'd3) song_select = 2'd1;
-        else if(signal == 3'd2)                        song_select = song_select + 2'd1;
-        else                                           song_select = song_select;
 
     end
 

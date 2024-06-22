@@ -135,7 +135,7 @@ module shift_load (
 	always @(posedge clk or posedge rst) begin
 		if(rst) 				note_range <= 20'd0;
 		else if(delete) 		note_range <= {note_range[19:18],2'd0,note_range[15:0]};
-		else if(NS == OFFSET && offset == 3'd6) note_range <= {note_range[17:0], song_bits[100-2*index-:2]};
+		else if(NS == OFFSET && offset == 3'd6) note_range <= {note_range[17:0], song_bits[song_length-2*index-:2]};
 		else if(CS == FINISH)   note_range <= 20'd0;
 		else 					note_range <= note_range;
 	end

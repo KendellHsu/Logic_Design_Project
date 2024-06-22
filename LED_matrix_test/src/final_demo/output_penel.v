@@ -52,8 +52,8 @@ reg [1:0] CS, NS;
 reg [6:0] col;    // column count
 reg [3:0] row;    // row count
 
-localparam START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
-localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
+localparam START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;     // game   control
+localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix perform
 
     //FSM
     always @(posedge clk or posedge rst) begin
@@ -65,7 +65,9 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
     always @(*) begin
         case(CS)
 
-            IDLE: NS = GET;
+            IDLE: NS = DELAY;
+
+            DELAY: NS = GET;
 
             GET: NS =(col == 7'd64)? TRANSMIT : GET;    //count 64 column
 
@@ -81,9 +83,9 @@ localparam IDLE = 2'd0, GET = 2'd1, TRANSMIT = 2'd2;
     always @(posedge clk or posedge rst) begin
         if(rst)               col <= 7'd0;
 
-        else if(col == 7'd64) col <= 7'd0;
+        else if(CS == DELAY)  col <= 7'd0;
 
-        else if(NS == GET)    col <= col + 7'd1;
+        else if(CS == GET)    col <= col + 7'd1;
         else                  col <= col;
     end
 

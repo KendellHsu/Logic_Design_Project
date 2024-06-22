@@ -49,8 +49,11 @@ module tb;
         blue_button = 0;
         // Reset the design
         #10 rst = 0;
-        #10000000 red_button = 1;
-        #10000000 red_button = 0;
+        #1000000 red_button = 1;
+        #1000000 red_button = 0;
+        #1000000 red_button = 1;
+        #1000000 red_button = 0;
+        
         #10000000 yellow_button =1;
         #10000000 yellow_button =0;
 

@@ -3,7 +3,6 @@ module ScoreCounter (
     input wire reset,         // Reset signal
     input wire [7:0] combo,   // Combo value
     input wire [1:0] Inp,     // Input state value
-    input [1:0] current_state,
     output reg [15:0] score   // Score output
 );
 

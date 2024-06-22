@@ -45,35 +45,35 @@ module shift_load (
 
 	always @(posedge clk or posedge rst) begin
 		if(rst) begin 
-			song_bits   = 501'd0;
-			song_length = 10'd0;
-			speed       = 17'd0;
+			song_bits   <= 501'd0;
+			song_length <= 10'd0;
+			speed       <= 17'd0;
 		end
 
 		else if(CS == FINISH) begin
-			song_bits   = 501'd0;
-			song_length = 10'd0;
-			speed       = 17'd0;
+			song_bits   <= 501'd0;
+			song_length <= 10'd0;
+			speed       <= 17'd0;
 		end
 		
 		case(song)
 
 		2'd1: begin
-			song_bits[500 -: Rick_Roll_length] = Rick_Roll;
-			song_length = Rick_Roll_length;
-			speed       = Rick_Roll_speed;
+			song_bits[500 -: Rick_Roll_length] <= Rick_Roll;
+			song_length <= Rick_Roll_length;
+			speed       <= Rick_Roll_speed;
 		end
 
 		2'd2: begin
-			song_bits[500 -: yare_yare_length] = yare_yare;
-		 	song_length = yare_yare_length;
-			speed       = yare_yare_speed;
+			song_bits[500 -: yare_yare_length] <= yare_yare;
+		 	song_length <= yare_yare_length;
+			speed       <= yare_yare_speed;
 		 end
 
 	 	 2'd3: begin
-		 	song_bits[500 -: madeo_length] = madeo;
-		 	song_length = madeo_length;
-			speed       = madeo_speed;
+		 	song_bits[500 -: madeo_length] <= madeo;
+		 	song_length <= madeo_length;
+			speed       <= madeo_speed;
 		 end
 
 		endcase

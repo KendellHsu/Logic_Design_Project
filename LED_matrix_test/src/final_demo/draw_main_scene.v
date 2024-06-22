@@ -30,7 +30,6 @@ module draw_main_scene (
     // State transition logic
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            current_state <= START_SCENE;
             menuMap <= start_scene_map_off;
             counter <= 0;
             toggle <= 0;

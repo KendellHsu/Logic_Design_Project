@@ -12,7 +12,7 @@ module ScoreCounter (
     localparam SCORE_01 = 16'd2;
     localparam SCORE_10 = 16'd2;
     localparam SCORE_11 = 16'd4;
-    localparam MAX_SCORE = 16'dFFFF;
+    localparam MAX_SCORE = 16'hFFFF;
 
     // Declare the state
     localparam IDLE = 2'd0;

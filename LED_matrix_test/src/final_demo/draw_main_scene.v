@@ -1,4 +1,4 @@
-module game_state_machine (
+module draw_main_scene (
     input clk,
     input rst,
     input [1:0] current_state, // Current game state

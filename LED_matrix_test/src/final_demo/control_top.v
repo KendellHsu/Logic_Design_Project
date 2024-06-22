@@ -5,7 +5,9 @@
 `include "button_judge.v"
 `include "score.v"
 `include "draw_score.v"
-`include "draw_main_scene"
+`include "state_button.v"
+`include "draw_main_scene.v"
+
 
 module control(
     input clk,
@@ -82,7 +84,7 @@ module control(
     state_button SB(
         .clk(clk_shft),
         .rst(rst),
-        .finish(finsih),
+        .finish(finish),
         .red_button(red_button),
         .blue_button(blue_button),
         .yellow_button(yellow_button),

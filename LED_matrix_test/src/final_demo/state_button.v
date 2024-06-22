@@ -27,6 +27,7 @@ module state_button (
 
     always @(posedge clk or posedge rst) begin
         if(rst)                                                  signal    <= 3'd0;
+        else begin
         if(red_button == 1'd1 && last_button[0] == 1'd0)         signal[0] <= 1'd1;
         else if (red_button == 1'd0 && last_button[0] == 1'd0)   signal[0] <= 1'd0;
         else                                                     signal[0] <= 1'd0;
@@ -36,6 +37,7 @@ module state_button (
         if(yellow_button == 1'd1 && last_button[2] == 1'd0)      signal[2] <= 1'd1;
         else if(yellow_button == 1'd0 && last_button[2] == 1'd0) signal[2] <= 1'd0;
         else                                                     signal[2] <= 1'd0;
+        end
     end
 
 
@@ -66,7 +68,7 @@ module state_button (
     end
 
     always @(*) begin
-        if(rst) song_select = 1'd0;
+        if(rst) song_select = 1'd1;
 
         else if(signal == 3'd1 && song_select == 2'd1) song_select = 2'd3;
         else if(signal == 3'd1)                        song_select = song_select - 2'd1;

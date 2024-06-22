@@ -57,9 +57,9 @@ module draw_main_scene (
                                 counter <= 0;
                             end
                             if (toggle) begin
-                                menuMap <= ricl_roll_on;
+                                menuMap <= rickroll_on;
                             end else begin
-                                menuMap <= rick_roll_off;
+                                menuMap <= rickroll_off;
                             end  
                         end
                         2'd1: begin // Yare Yare

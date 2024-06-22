@@ -19,6 +19,7 @@ module tb;
     wire B1;
     wire OE;
     wire LAT;
+    integer i;
 
     // Instantiate the control module
     control c1(
@@ -56,10 +57,13 @@ module tb;
         
         #10000000 yellow_button =1;
         #10000000 yellow_button =0;
-
+        for(i=0;i<50;i=i+1)
+        begin
+        #50000000 red_button = 1;
+        #50000000 red_button = 0;
+        end
 
         // Run for a while
-        #100000000;
 
         // Finish simulation
         $stop;

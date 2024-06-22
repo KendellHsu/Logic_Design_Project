@@ -186,6 +186,7 @@ module control(
         .reset(rst),
         .combo(combo),
         .Inp(score_add),
+        .game_state(state),
         .score(score)
     );
 

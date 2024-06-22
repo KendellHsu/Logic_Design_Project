@@ -347,6 +347,12 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
         end
 
         else begin
+
+            if(NS == DELAY) begin
+                OE  <= 1'd1;
+                LAT <= 1'd0;
+            end
+
             if(NS == GET) begin
                 OE  <= 1'd1;
                 LAT <= 1'd0;

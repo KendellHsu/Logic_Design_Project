@@ -22,6 +22,7 @@ module button_judge (
             delete_note <= 1'b0;
             red_button_prev <= 1'b0;
             blue_button_prev <= 1'b0;
+
         end else begin
             // Update previous button states
             red_button_prev <= red_button;

@@ -8,10 +8,10 @@ module ScoreCounter (
 
     // Define the score values for each state
     localparam SCORE_00 = 16'd0;
-    localparam SCORE_01 = 16'd32;
-    localparam SCORE_10 = 16'd32;
-    localparam SCORE_11 = 16'd256;
-    localparam MAX_SCORE = 16'd65535;
+    localparam SCORE_01 = 16'd2;
+    localparam SCORE_10 = 16'd2;
+    localparam SCORE_11 = 16'd4;
+    localparam MAX_SCORE = 16'dFFFF;
 
     // Declare the variables outside the always block
     reg [15:0] add_score;
@@ -77,8 +77,7 @@ module ScoreCounter (
                 2'b11: add_score = SCORE_11;
                 default: add_score = 16'd0;
             endcase
-
-            add_score = add_score * multiplier;
+            // add_score = add_score * multiplier;
             score <= (score + add_score <= MAX_SCORE) ? score + add_score : MAX_SCORE;
         end
     end

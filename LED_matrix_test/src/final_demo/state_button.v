@@ -5,13 +5,13 @@ module state_button (
     input            red_button,
     input            blue_button,
     input            yellow_button,
-    output reg [1:0] song_confirm,   
+    output reg [1:0] song_confirm,
+    output reg [1:0] song_select,  
     output reg [1:0] state
 );
     localparam START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
     reg [1:0] CS, NS;
     reg [2:0] last_button;
-    reg [1:0] song_select;
     reg [2:0] signal;
 
 

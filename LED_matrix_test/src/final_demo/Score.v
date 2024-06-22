@@ -3,6 +3,7 @@ module ScoreCounter (
     input wire reset,         // Reset signal
     input wire [7:0] combo,   // Combo value
     input wire [1:0] Inp,     // Input state value
+    input reg [1:0] game_state,
     output reg [15:0] score   // Score output
 );
 
@@ -13,9 +14,16 @@ module ScoreCounter (
     localparam SCORE_11 = 16'd4;
     localparam MAX_SCORE = 16'dFFFF;
 
+    // Declare the state
+    localparam IDLE = 2'd0;
+    localparam SONG_SELECT = 2'd1
+    localparam GAME_SELECT = 2'd2;
+    localparam GAME_OVER = 2'd3;
+
     // Declare the variables outside the always block
     reg [15:0] add_score;
     reg [4:0] multiplier;
+    reg current_state;
 
     // Initialize score to 0
     initial begin
@@ -62,23 +70,35 @@ module ScoreCounter (
         end
     endfunction
 
-    // Main logic to update score based on state and combo
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            score <= 16'd0;  // When reset signal is high, reset the score to 0
-        end 
-        else begin
-            multiplier = get_multiplier(combo);
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            current_state <= IDLE;
+        end else begin
+            current_state <= game_state;
+            
+            case (current_state)
+                IDLE: begin
+                end
+                SONG_SELECT: begin
+                end
+                GAME_PLAY: begin
+                    multiplier = get_multiplier(combo);
 
-            case (Inp)
-                2'b00: add_score = SCORE_00;
-                2'b01: add_score = SCORE_01;
-                2'b10: add_score = SCORE_10;
-                2'b11: add_score = SCORE_11;
-                default: add_score = 16'd0;
+                    case (Inp)
+                        2'b00: add_score = SCORE_00;
+                        2'b01: add_score = SCORE_01;
+                        2'b10: add_score = SCORE_10;
+                        2'b11: add_score = SCORE_11;
+                        default: add_score = 16'd0;
+                    endcase
+
+                    add_score = add_score * multiplier;
+                    score <= (score + add_score <= MAX_SCORE) ? score + add_score : MAX_SCORE;
+                end
+                GAME_OVER: begin
+                    score <= 16'd0;
+                end
             endcase
-            // add_score = add_score * multiplier;
-            score <= (score + add_score <= MAX_SCORE) ? score + add_score : MAX_SCORE;
         end
     end
 

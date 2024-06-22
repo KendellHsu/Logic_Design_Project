@@ -36,8 +36,8 @@ module button_judge (
                     delete_note <= 1'b1;
                     case (offset)
                         3'd2, 3'd3, 3'd4: score <= 2'b11;  // perfect
-                        3'd5: score <= 2'b10;              // late
-                        3'd1: score <= 2'b01;              // early
+                        3'd5, 3'd6: score <= 2'b10;        // late
+                        3'd1, 3'd0: score <= 2'b01;        // early
                         default: score <= 2'b00;           // none
                     endcase
                 end
@@ -46,8 +46,8 @@ module button_judge (
                     delete_note <= 1'b1;
                     case (offset)
                         3'd2, 3'd3, 3'd4: score <= 2'b11;  // perfect
-                        3'd5: score <= 2'b10;              // late
-                        3'd1: score <= 2'b01;              // early
+                        3'd5, 3'd6: score <= 2'b10;        // late
+                        3'd1, 3'd0: score <= 2'b01;        // early
                         default: score <= 2'b00;           // none
                     endcase
                 end

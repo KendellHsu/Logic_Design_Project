@@ -40,13 +40,13 @@ module control(
     wire        finish;
 
     //wire for draw node 
-    wire [191:0] bitmap0;
-    wire [191:0] bitmap1;
-    wire [191:0] bitmap2;
-    wire [191:0] bitmap3;
-    wire [191:0] bitmap4;
-    wire [191:0] bitmap5;
-    wire [191:0] bitmap6;
+    wire [209:0] bitmap0;
+    wire [209:0] bitmap1;
+    wire [209:0] bitmap2;
+    wire [209:0] bitmap3;
+    wire [209:0] bitmap4;
+    wire [209:0] bitmap5;
+    wire [209:0] bitmap6;
 
     //wire for matrix (Maps are the output of the draw score module)
     wire [6143:0] menuMap;
@@ -68,67 +68,27 @@ module control(
     //wire for score
     wire [15:0] score;
 
-
-    reg  [1:0] song_select;
-    reg  [1:0] state;
-    reg  [1:0] CS, NS;
-    parameter START = 2'd0, MENU = 2'd1, PLAY = 2'd2, FINISH = 2'd3;
-
-    assign song_confirm = (yellow_button)? song_select : 2'd0;
-
-    always @(posedge clk_shft or posedge rst) begin
-        if(rst) song_select = 1'd0;
-
-        else if(NS == MENU) begin
-            if(red_button == 1'd1  && (song_select == 2'd1) == 1'd1) song_select = 2'd3;
-
-            else if(red_button == 1'd1) song_select = song_select - 2'd1;
-   
-            else if(blue_button == 1'd1 && (song_select == 2'd3) == 1'd1) song_select =2'd1;
-
-            else if(blue_button == 1'd1)  song_select = song_select + 2'd1;         
-            
-            else    song_select = song_select;
-        end
-
-        else        song_select = song_select;
-    end
-
- 
-
-    always @(posedge clk_shft or posedge rst) begin
-        if(rst) begin 
-            CS <= START;
-        end
-        else    CS <= NS; 
-    end
-
-    always @(*) begin
-        case(CS)
-
-        START:  NS = (red_button || blue_button) ? MENU : START;
-        
-        MENU:   NS = (yellow_button == 1'd1 && (song_select != 2'd0)) ? PLAY : MENU;
-
-        PLAY:   NS = (finish == 1'd1) ? FINISH : PLAY;
-
-        FINISH: NS = (yellow_button == 1'd1) ? MENU : FINISH;
-
-        endcase
-
-    end
-
-    always @(posedge clk_shft or posedge rst) begin
-        if(rst) state <= START;
-        else    state <= NS;
-    end
+    //wire for state_button
+    wire [1:0]  state;
 
 
+/*=================================================================================================================================================================*/
 
     clk_div clk_div_0(
         .clk(clk),
         .rst(rst),
         .clk_div(clk_shft)
+    );
+
+    state_button SB(
+        .clk(clk),
+        .rst(rst),
+        .finish(finsih),
+        .red_button(red_button),
+        .blue_button(blue_button),
+        .yellow_button(yellow_button),
+        .song_confirm(song_confirm),
+        .state(state)
     );
 
     shift_load SH1(
@@ -174,13 +134,13 @@ module control(
         .scoreMap7(scoreMap7),
         .scoreMap8(scoreMap8),
         .scoreMap9(scoreMap9),
-        .notesMap0(bitmap0),
-        .notesMap1(bitmap1),
-        .notesMap2(bitmap2),
-        .notesMap3(bitmap3),
-        .notesMap4(bitmap4),
-        .notesMap5(bitmap5),
-        .notesMap6(bitmap6),
+        .notesMap0(bitmap0[191:0]),
+        .notesMap1(bitmap1[191:0]),
+        .notesMap2(bitmap2[191:0]),
+        .notesMap3(bitmap3[191:0]),
+        .notesMap4(bitmap4[191:0]),
+        .notesMap5(bitmap5[191:0]),
+        .notesMap6(bitmap6[191:0]),
         .A(A),
         .B(B),
         .C(C),
@@ -205,7 +165,7 @@ module control(
         .offset(offset),
         .node_R(note_R_judge),
         .node_B(note_B_judge),
-        .delete_note(delete),    //need to fix
+        .delete_note(delete),    
         .score(score_add)
     );
 

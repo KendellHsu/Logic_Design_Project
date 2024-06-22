@@ -70,13 +70,13 @@ always @(*) begin
             bitmap6[i*7*3+:21] = 0;
         end
     end
-    bitmap0 = bitmap0 << offset*3;
-    bitmap1 = bitmap1 << offset*3;
-    bitmap2 = bitmap2 << offset*3;
-    bitmap3 = bitmap3 << offset*3;
-    bitmap4 = bitmap4 << offset*3;
-    bitmap5 = bitmap5 << offset*3;
-    bitmap6 = bitmap6 << offset*3;
+    bitmap0 = bitmap0 >> offset*3;
+    bitmap1 = bitmap1 >> offset*3;
+    bitmap2 = bitmap2 >> offset*3;
+    bitmap3 = bitmap3 >> offset*3;
+    bitmap4 = bitmap4 >> offset*3;
+    bitmap5 = bitmap5 >> offset*3;
+    bitmap6 = bitmap6 >> offset*3;
 end
 
 endmodule

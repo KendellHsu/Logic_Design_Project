@@ -10,7 +10,6 @@
 module control(
     input clk,
     input rst,
-    //input bottom,
     input red_button,
     input blue_button,
     input yellow_button,
@@ -81,7 +80,7 @@ module control(
     );
 
     state_button SB(
-        .clk(clk),
+        .clk(clk_shft),
         .rst(rst),
         .finish(finsih),
         .red_button(red_button),
@@ -89,6 +88,14 @@ module control(
         .yellow_button(yellow_button),
         .song_confirm(song_confirm),
         .state(state)
+    );
+
+    draw_main_scene DMS1(
+        .clk(clk_shft),
+        .rst(rst),
+        .current_state(state),
+        .selected_song(song_confirm),
+        .menuMap(menuMap)
     );
 
     shift_load SH1(
@@ -101,7 +108,8 @@ module control(
         .note_B(note_B),
         .offset(offset),
         .note_R_judge(note_R_judge),   
-        .note_B_judge(note_B_judge),   
+        .note_B_judge(note_B_judge), 
+        .combo(combo),  
         .finish(finish)
         );
 
@@ -123,7 +131,7 @@ module control(
         .clk(clk_shft),
         .rst(rst),
         .state(state),
-        .menuMap(0),                //undone
+        .menuMap(menuMap),                //undone
         .scoreMap0(scoreMap0),
         .scoreMap1(scoreMap1),
         .scoreMap2(scoreMap2),
@@ -158,7 +166,7 @@ module control(
 
 
     button_judge BJ1(
-        .clk(clk),
+        .clk(clk_shft),
         .rst(rst),
         .red_button(red_button),
         .blue_button(blue_button),
@@ -170,7 +178,7 @@ module control(
     );
 
     ScoreCounter SC1(
-        .clk(clk),
+        .clk(clk_shft),
         .reset(rst),
         .combo(combo),
         .Inp(score_add),

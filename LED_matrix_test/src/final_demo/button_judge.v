@@ -51,8 +51,8 @@ module button_judge (
                     endcase
                 end
             end else begin
-                score <= score;
-                delete_note <= delete_note;
+                score <= 1'd0;
+                delete_note <= 1'd0;
             end
         end
     end

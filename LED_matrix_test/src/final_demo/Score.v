@@ -7,11 +7,11 @@ module ScoreCounter (
 );
 
     // Define the score values for each state
-    parameter SCORE_00 = 16'd0;
-    parameter SCORE_01 = 16'd32;
-    parameter SCORE_10 = 16'd32;
-    parameter SCORE_11 = 16'd256;
-    parameter MAX_SCORE = 16'd65535;
+    localparam SCORE_00 = 16'd0;
+    localparam SCORE_01 = 16'd32;
+    localparam SCORE_10 = 16'd32;
+    localparam SCORE_11 = 16'd256;
+    localparam MAX_SCORE = 16'd65535;
 
     // Declare the variables outside the always block
     reg [15:0] add_score;

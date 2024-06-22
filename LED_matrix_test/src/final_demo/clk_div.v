@@ -7,7 +7,7 @@ module clk_div (
     reg [31:0] count;
 
     // Set the division factor
-    parameter DIV_FACTOR = 50; // Adjust this value according to your requirement
+    localparam DIV_FACTOR = 50; // Adjust this value according to your requirement
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin

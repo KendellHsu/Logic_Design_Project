@@ -183,10 +183,10 @@ module control(
 
     ScoreCounter SC1(
         .clk(clk_shft),
-        .reset(rst),
+        .rst(rst),
         .combo(combo),
         .Inp(score_add),
-        .game_state(state),
+        .current_state(state),
         .score(score)
     );
 

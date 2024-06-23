@@ -1,9 +1,9 @@
 module ScoreCounter (
     input wire clk,           // Clock signal
-    input wire reset,         // Reset signal
+    input wire rst,         // Reset signal
     input wire [7:0] combo,   // Combo value
     input wire [1:0] Inp,     // Input state value
-    input reg [1:0] game_state,
+    input      [1:0] current_state,
     output reg [15:0] score   // Score output
 );
 
@@ -16,14 +16,14 @@ module ScoreCounter (
 
     // Declare the state
     localparam IDLE = 2'd0;
-    localparam SONG_SELECT = 2'd1
-    localparam GAME_SELECT = 2'd2;
+    localparam SONG_SELECT = 2'd1;
+    localparam GAME_PLAY = 2'd2;
     localparam GAME_OVER = 2'd3;
 
     // Declare the variables outside the always block
     reg [15:0] add_score;
     reg [4:0] multiplier;
-    reg current_state;
+
 
     // Initialize score to 0
     initial begin
@@ -72,14 +72,14 @@ module ScoreCounter (
 
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            current_state <= IDLE;
-        end else begin
-            current_state <= game_state;
-            
+            score <= 16'd0;
+        end else begin            
             case (current_state)
                 IDLE: begin
+                    
                 end
                 SONG_SELECT: begin
+                    score <= 16'd0;
                 end
                 GAME_PLAY: begin
                     multiplier = get_multiplier(combo);
@@ -96,7 +96,6 @@ module ScoreCounter (
                     score <= (score + add_score <= MAX_SCORE) ? score + add_score : MAX_SCORE;
                 end
                 GAME_OVER: begin
-                    score <= 16'd0;
                 end
             endcase
         end

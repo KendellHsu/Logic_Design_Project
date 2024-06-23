@@ -22,6 +22,7 @@ module button_judge (
             delete_note <= 1'b0;
             red_button_prev <= 1'b0;
             blue_button_prev <= 1'b0;
+
         end else begin
             // Update previous button states
             red_button_prev <= red_button;
@@ -35,8 +36,8 @@ module button_judge (
                     delete_note <= 1'b1;
                     case (offset)
                         3'd2, 3'd3, 3'd4: score <= 2'b11;  // perfect
-                        3'd5: score <= 2'b10;              // late
-                        3'd1: score <= 2'b01;              // early
+                        3'd5, 3'd6: score <= 2'b10;        // late
+                        3'd1, 3'd0: score <= 2'b01;        // early
                         default: score <= 2'b00;           // none
                     endcase
                 end
@@ -45,8 +46,8 @@ module button_judge (
                     delete_note <= 1'b1;
                     case (offset)
                         3'd2, 3'd3, 3'd4: score <= 2'b11;  // perfect
-                        3'd5: score <= 2'b10;              // late
-                        3'd1: score <= 2'b01;              // early
+                        3'd5, 3'd6: score <= 2'b10;        // late
+                        3'd1, 3'd0: score <= 2'b01;        // early
                         default: score <= 2'b00;           // none
                     endcase
                 end

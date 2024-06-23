@@ -2,7 +2,7 @@
 ## To use it in a project:
 ## - uncomment the lines corresponding to used pins
 ## - rename the used ports (in each line, after get_ports) according to the top level signal names in the project
-
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets rst_IBUF];
 ## Clock signal 125 MHz
 set_property -dict { PACKAGE_PIN H16   IOSTANDARD LVCMOS33 } [get_ports { clk }]; #IO_L13P_T2_MRCC_35 Sch=sysclk
 create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { clk }];
@@ -34,9 +34,9 @@ create_generated_clock -name clk_div -divide_by 125000000 -source [get_ports clk
 ##Buttons
 
 set_property -dict { PACKAGE_PIN D19   IOSTANDARD LVCMOS33 } [get_ports { rst }]; #IO_L4P_T0_35 Sch=btn[0]
-#set_property -dict { PACKAGE_PIN D20   IOSTANDARD LVCMOS33 } [get_ports { bottom }]; #IO_L4N_T0_35 Sch=btn[1]
-#set_property -dict { PACKAGE_PIN L20   IOSTANDARD LVCMOS33 } [get_ports { btn[2] }]; #IO_L9N_T1_DQS_AD3N_35 Sch=btn[2]
-#set_property -dict { PACKAGE_PIN L19   IOSTANDARD LVCMOS33 } [get_ports { btn[3] }]; #IO_L9P_T1_DQS_AD3P_35 Sch=btn[3]
+#set_property -dict { PACKAGE_PIN D20   IOSTANDARD LVCMOS33 } [get_ports { red_button }]; #IO_L4N_T0_35 Sch=btn[1]
+#set_property -dict { PACKAGE_PIN L20   IOSTANDARD LVCMOS33 } [get_ports { blue_button }]; #IO_L9N_T1_DQS_AD3N_35 Sch=btn[2]
+#set_property -dict { PACKAGE_PIN L19   IOSTANDARD LVCMOS33 } [get_ports { yellow_button }]; #IO_L9P_T1_DQS_AD3P_35 Sch=btn[3]
 
 ##PmodA
 
@@ -101,12 +101,12 @@ set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { B0 }];
 set_property -dict { PACKAGE_PIN T15   IOSTANDARD LVCMOS33 } [get_ports { R1 }]; #IO_L5N_T0_34 Sch=ar[5]
 set_property -dict { PACKAGE_PIN R16   IOSTANDARD LVCMOS33 } [get_ports { G1 }]; #IO_L19P_T3_34 Sch=ar[6]
 set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports { B1 }]; #IO_L9N_T1_DQS_34 Sch=ar[7]
-#set_property -dict { PACKAGE_PIN V17   IOSTANDARD LVCMOS33 } [get_ports { ar[8] }]; #IO_L21P_T3_DQS_34 Sch=ar[8]
+#set_property -dict { PACKAGE_PIN V17   IOSTANDARD LVCMOS33 } [get_ports { yellow_button }]; #IO_L21P_T3_DQS_34 Sch=ar[8]
 set_property -dict { PACKAGE_PIN V18   IOSTANDARD LVCMOS33 } [get_ports { OE }]; #IO_L21N_T3_DQS_34 Sch=ar[9]
 set_property -dict { PACKAGE_PIN T16   IOSTANDARD LVCMOS33 } [get_ports { LAT }]; #IO_L9P_T1_DQS_34 Sch=ar[10]
 set_property -dict { PACKAGE_PIN R17   IOSTANDARD LVCMOS33 } [get_ports { clk_shft }]; #IO_L19N_T3_VREF_34 Sch=ar[11]
 set_property -dict { PACKAGE_PIN P18   IOSTANDARD LVCMOS33 } [get_ports { red_button }]; #IO_L23N_T3_34 Sch=ar[12] .  # red button
-set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports { blue_button }]; #IO_L23P_T3_34 Sch=ar[13] .  # green button
+set_property -dict { PACKAGE_PIN N17   IOSTANDARD LVCMOS33 } [get_ports { blue_button }]; #IO_L23P_T3_34 Sch=ar[13] .  # blue button
 set_property -dict { PACKAGE_PIN Y13   IOSTANDARD LVCMOS33 } [get_ports { yellow_button }]; #IO_L20N_T3_13 Sch=a
 
 ##Arduino Digital I/O On Outer Analog Header

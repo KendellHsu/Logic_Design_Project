@@ -71,6 +71,7 @@ module control(
 
     //wire for state_button
     wire [1:0]  state;
+    wire [1:0]  song_select;
 
 
 /*=================================================================================================================================================================*/
@@ -89,6 +90,7 @@ module control(
         .blue_button(blue_button),
         .yellow_button(yellow_button),
         .song_confirm(song_confirm),
+        .song_select(song_select),
         .state(state)
     );
 
@@ -96,7 +98,7 @@ module control(
         .clk(clk_shft),
         .rst(rst),
         .current_state(state),
-        .selected_song(song_confirm),
+        .selected_song(song_select),
         .menuMap(menuMap)
     );
 
@@ -181,9 +183,10 @@ module control(
 
     ScoreCounter SC1(
         .clk(clk_shft),
-        .reset(rst),
+        .rst(rst),
         .combo(combo),
         .Inp(score_add),
+        .current_state(state),
         .score(score)
     );
 

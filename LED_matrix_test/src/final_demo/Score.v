@@ -9,9 +9,9 @@ module ScoreCounter (
 
     // Define the score values for each state
     localparam SCORE_00 = 16'd0;
-    localparam SCORE_01 = 16'd2;
-    localparam SCORE_10 = 16'd2;
-    localparam SCORE_11 = 16'd4;
+    localparam SCORE_01 = 16'd5;
+    localparam SCORE_10 = 16'd5;
+    localparam SCORE_11 = 16'd10;
     localparam MAX_SCORE = 16'hFFFF;
 
     // Declare the state

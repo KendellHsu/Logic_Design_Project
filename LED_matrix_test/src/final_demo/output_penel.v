@@ -101,7 +101,7 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
 
     //row output
     always @(*) begin
-        {D, C, B, A} = row;
+        {D, C, B, A} = row - 4'd1;
     end
     
     //RGB output
@@ -120,31 +120,31 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
 
             START:
             begin
-                R0 <= menuMap[6143-(row*64+col)*3];
-                G0 <= menuMap[6142-(row*64+col)*3];
-                B0 <= menuMap[6141-(row*64+col)*3];
-                R1 <= menuMap[3071-(row*64+col)*3];
-                G1 <= menuMap[3070-(row*64+col)*3];
-                B1 <= menuMap[3069-(row*64+col)*3];
+                R0 <= menuMap[6143-(row*64+(col - 7'd1))*3];
+                G0 <= menuMap[6142-(row*64+(col - 7'd1))*3];
+                B0 <= menuMap[6141-(row*64+(col - 7'd1))*3];
+                R1 <= menuMap[3071-(row*64+(col - 7'd1))*3];
+                G1 <= menuMap[3070-(row*64+(col - 7'd1))*3];
+                B1 <= menuMap[3069-(row*64+(col - 7'd1))*3];
             end
 
             MENU:
             begin
-                R0 <= menuMap[6143-(row*64+col)*3];
-                G0 <= menuMap[6142-(row*64+col)*3];
-                B0 <= menuMap[6141-(row*64+col)*3];
-                R1 <= menuMap[3071-(row*64+col)*3];
-                G1 <= menuMap[3070-(row*64+col)*3];
-                B1 <= menuMap[3069-(row*64+col)*3];
+                R0 <= menuMap[6143-(row*64+(col - 7'd1))*3];
+                G0 <= menuMap[6142-(row*64+(col - 7'd1))*3];
+                B0 <= menuMap[6141-(row*64+(col - 7'd1))*3];
+                R1 <= menuMap[3071-(row*64+(col - 7'd1))*3];
+                G1 <= menuMap[3070-(row*64+(col - 7'd1))*3];
+                B1 <= menuMap[3069-(row*64+(col - 7'd1))*3];
             end
             
             PLAY:
             begin
                 if(row == 3) begin    
-                    R0 <= scoreMap0[191-col*3];
-                    G0 <= scoreMap0[190-col*3];
-                    B0 <= scoreMap0[189-col*3];
-                    if (col==7'd6) begin
+                    R0 <= scoreMap0[191-(col - 7'd1)*3];
+                    G0 <= scoreMap0[190-(col - 7'd1)*3];
+                    B0 <= scoreMap0[189-(col - 7'd1)*3];
+                    if ((col - 7'd1)==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -156,10 +156,10 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
                     end
                 end
                 else if(row == 4) begin    
-                    R0 <= scoreMap1[191-col*3];
-                    G0 <= scoreMap1[190-col*3];
-                    B0 <= scoreMap1[189-col*3];
-                    if (col==7'd6) begin
+                    R0 <= scoreMap1[191-(col - 7'd1)*3];
+                    G0 <= scoreMap1[190-(col - 7'd1)*3];
+                    B0 <= scoreMap1[189-(col - 7'd1)*3];
+                    if ((col - 7'd1)==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -171,66 +171,66 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
                     end
                 end
                 else if(row == 5) begin    
-                    R0 <= scoreMap2[191-col*3];
-                    G0 <= scoreMap2[190-col*3];
-                    B0 <= scoreMap2[189-col*3];
-                    R1 <= notesMap0[col*3+2];
-                    G1 <= notesMap0[col*3+1];
-                    B1 <= notesMap0[col*3];
+                    R0 <= scoreMap2[191-(col - 7'd1)*3];
+                    G0 <= scoreMap2[190-(col - 7'd1)*3];
+                    B0 <= scoreMap2[189-(col - 7'd1)*3];
+                    R1 <= notesMap0[(col - 7'd1)*3+2];
+                    G1 <= notesMap0[(col - 7'd1)*3+1];
+                    B1 <= notesMap0[(col - 7'd1)*3];
                 end
                 else if(row == 6) begin    
-                    R0 <= scoreMap3[191-col*3];
-                    G0 <= scoreMap3[190-col*3];
-                    B0 <= scoreMap3[189-col*3];
-                    R1 <= notesMap1[col*3+2];
-                    G1 <= notesMap1[col*3+1];
-                    B1 <= notesMap1[col*3];
+                    R0 <= scoreMap3[191-(col - 7'd1)*3];
+                    G0 <= scoreMap3[190-(col - 7'd1)*3];
+                    B0 <= scoreMap3[189-(col - 7'd1)*3];
+                    R1 <= notesMap1[(col - 7'd1)*3+2];
+                    G1 <= notesMap1[(col - 7'd1)*3+1];
+                    B1 <= notesMap1[(col - 7'd1)*3];
                 end
                 else if(row == 7) begin    
-                    R0 <= scoreMap4[191-col*3];
-                    G0 <= scoreMap4[190-col*3];
-                    B0 <= scoreMap4[189-col*3];
-                    R1 <= notesMap2[col*3+2];
-                    G1 <= notesMap2[col*3+1];
-                    B1 <= notesMap2[col*3];
+                    R0 <= scoreMap4[191-(col - 7'd1)*3];
+                    G0 <= scoreMap4[190-(col - 7'd1)*3];
+                    B0 <= scoreMap4[189-(col - 7'd1)*3];
+                    R1 <= notesMap2[(col - 7'd1)*3+2];
+                    G1 <= notesMap2[(col - 7'd1)*3+1];
+                    B1 <= notesMap2[(col - 7'd1)*3];
                 end
                 else if(row == 8) begin    
-                    R0 <= scoreMap5[191-col*3];
-                    G0 <= scoreMap5[190-col*3];
-                    B0 <= scoreMap5[189-col*3];
-                    R1 <= notesMap3[col*3+2];
-                    G1 <= notesMap3[col*3+1];
-                    B1 <= notesMap3[col*3];
+                    R0 <= scoreMap5[191-(col - 7'd1)*3];
+                    G0 <= scoreMap5[190-(col - 7'd1)*3];
+                    B0 <= scoreMap5[189-(col - 7'd1)*3];
+                    R1 <= notesMap3[(col - 7'd1)*3+2];
+                    G1 <= notesMap3[(col - 7'd1)*3+1];
+                    B1 <= notesMap3[(col - 7'd1)*3];
                 end
                 else if(row == 9) begin    
-                    R0 <= scoreMap6[191-col*3];
-                    G0 <= scoreMap6[190-col*3];
-                    B0 <= scoreMap6[189-col*3];
-                    R1 <= notesMap4[col*3+2];
-                    G1 <= notesMap4[col*3+1];
-                    B1 <= notesMap4[col*3];
+                    R0 <= scoreMap6[191-(col - 7'd1)*3];
+                    G0 <= scoreMap6[190-(col - 7'd1)*3];
+                    B0 <= scoreMap6[189-(col - 7'd1)*3];
+                    R1 <= notesMap4[(col - 7'd1)*3+2];
+                    G1 <= notesMap4[(col - 7'd1)*3+1];
+                    B1 <= notesMap4[(col - 7'd1)*3];
                 end
                 else if(row == 10) begin    
-                    R0 <= scoreMap7[191-col*3];
-                    G0 <= scoreMap7[190-col*3];
-                    B0 <= scoreMap7[189-col*3];
-                    R1 <= notesMap5[col*3+2];
-                    G1 <= notesMap5[col*3+1];
-                    B1 <= notesMap5[col*3];
+                    R0 <= scoreMap7[191-(col - 7'd1)*3];
+                    G0 <= scoreMap7[190-(col - 7'd1)*3];
+                    B0 <= scoreMap7[189-(col - 7'd1)*3];
+                    R1 <= notesMap5[(col - 7'd1)*3+2];
+                    G1 <= notesMap5[(col - 7'd1)*3+1];
+                    B1 <= notesMap5[(col - 7'd1)*3];
                 end
                 else if(row == 11) begin    
-                    R0 <= scoreMap8[191-col*3];
-                    G0 <= scoreMap8[190-col*3];
-                    B0 <= scoreMap8[189-col*3];
-                    R1 <= notesMap6[col*3+2];
-                    G1 <= notesMap6[col*3+1];
-                    B1 <= notesMap6[col*3];
+                    R0 <= scoreMap8[191-(col - 7'd1)*3];
+                    G0 <= scoreMap8[190-(col - 7'd1)*3];
+                    B0 <= scoreMap8[189-(col - 7'd1)*3];
+                    R1 <= notesMap6[(col - 7'd1)*3+2];
+                    G1 <= notesMap6[(col - 7'd1)*3+1];
+                    B1 <= notesMap6[(col - 7'd1)*3];
                 end
                 else if(row == 12) begin    
-                    R0 <= scoreMap9[191-col*3];
-                    G0 <= scoreMap9[190-col*3];
-                    B0 <= scoreMap9[189-col*3];
-                    if (col==7'd6) begin
+                    R0 <= scoreMap9[191-(col - 7'd1)*3];
+                    G0 <= scoreMap9[190-(col - 7'd1)*3];
+                    B0 <= scoreMap9[189-(col - 7'd1)*3];
+                    if ((col - 7'd1)==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -253,7 +253,7 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
                     R0 <= 1'b0;
                     G0 <= 1'b0;
                     B0 <= 1'b0;
-                    if (col==7'd6) begin
+                    if ((col - 7'd1)==7'd6) begin
                         R1 <= 1'b1;
                         G1 <= 1'b1;
                         B1 <= 1'b0;
@@ -268,54 +268,54 @@ localparam IDLE = 2'd0, DELAY = 2'd1, GET = 2'd2, TRANSMIT = 2'd3;    // matrix 
             FINISH: 
             begin
                 if(row == 3) begin    
-                    R0 <= scoreMap0[191-col*3];
-                    G0 <= scoreMap0[190-col*3];
-                    B0 <= scoreMap0[189-col*3];
+                    R0 <= scoreMap0[191-(col - 7'd1)*3];
+                    G0 <= scoreMap0[190-(col - 7'd1)*3];
+                    B0 <= scoreMap0[189-(col - 7'd1)*3];
                 end
                 else if(row == 4) begin    
-                    R0 <= scoreMap1[191-col*3];
-                    G0 <= scoreMap1[190-col*3];
-                    B0 <= scoreMap1[189-col*3];
+                    R0 <= scoreMap1[191-(col - 7'd1)*3];
+                    G0 <= scoreMap1[190-(col - 7'd1)*3];
+                    B0 <= scoreMap1[189-(col - 7'd1)*3];
                 end
                 else if(row == 5) begin    
-                    R0 <= scoreMap2[191-col*3];
-                    G0 <= scoreMap2[190-col*3];
-                    B0 <= scoreMap2[189-col*3];
+                    R0 <= scoreMap2[191-(col - 7'd1)*3];
+                    G0 <= scoreMap2[190-(col - 7'd1)*3];
+                    B0 <= scoreMap2[189-(col - 7'd1)*3];
                 end
                 else if(row == 6) begin    
-                    R0 <= scoreMap3[191-col*3];
-                    G0 <= scoreMap3[190-col*3];
-                    B0 <= scoreMap3[189-col*3];
+                    R0 <= scoreMap3[191-(col - 7'd1)*3];
+                    G0 <= scoreMap3[190-(col - 7'd1)*3];
+                    B0 <= scoreMap3[189-(col - 7'd1)*3];
                 end
                 else if(row == 7) begin    
-                    R0 <= scoreMap4[191-col*3];
-                    G0 <= scoreMap4[190-col*3];
-                    B0 <= scoreMap4[189-col*3];
+                    R0 <= scoreMap4[191-(col - 7'd1)*3];
+                    G0 <= scoreMap4[190-(col - 7'd1)*3];
+                    B0 <= scoreMap4[189-(col - 7'd1)*3];
                 end
                 else if(row == 8) begin    
-                    R0 <= scoreMap5[191-col*3];
-                    G0 <= scoreMap5[190-col*3];
-                    B0 <= scoreMap5[189-col*3];
+                    R0 <= scoreMap5[191-(col - 7'd1)*3];
+                    G0 <= scoreMap5[190-(col - 7'd1)*3];
+                    B0 <= scoreMap5[189-(col - 7'd1)*3];
                 end
                 else if(row == 9) begin    
-                    R0 <= scoreMap6[191-col*3];
-                    G0 <= scoreMap6[190-col*3];
-                    B0 <= scoreMap6[189-col*3];
+                    R0 <= scoreMap6[191-(col - 7'd1)*3];
+                    G0 <= scoreMap6[190-(col - 7'd1)*3];
+                    B0 <= scoreMap6[189-(col - 7'd1)*3];
                 end
                 else if(row == 10) begin    
-                    R0 <= scoreMap7[191-col*3];
-                    G0 <= scoreMap7[190-col*3];
-                    B0 <= scoreMap7[189-col*3];
+                    R0 <= scoreMap7[191-(col - 7'd1)*3];
+                    G0 <= scoreMap7[190-(col - 7'd1)*3];
+                    B0 <= scoreMap7[189-(col - 7'd1)*3];
                 end
                 else if(row == 11) begin    
-                    R0 <= scoreMap8[191-col*3];
-                    G0 <= scoreMap8[190-col*3];
-                    B0 <= scoreMap8[189-col*3];
+                    R0 <= scoreMap8[191-(col - 7'd1)*3];
+                    G0 <= scoreMap8[190-(col - 7'd1)*3];
+                    B0 <= scoreMap8[189-(col - 7'd1)*3];
                 end
                 else if(row == 12) begin    
-                    R0 <= scoreMap9[191-col*3];
-                    G0 <= scoreMap9[190-col*3];
-                    B0 <= scoreMap9[189-col*3];
+                    R0 <= scoreMap9[191-(col - 7'd1)*3];
+                    G0 <= scoreMap9[190-(col - 7'd1)*3];
+                    B0 <= scoreMap9[189-(col - 7'd1)*3];
                 end
                 else begin
                     R0 <= 1'b0;
